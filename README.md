@@ -1,4 +1,4 @@
-# Poisonous Mushroom Classification
+# Mushroom Species Classification
 
 
 ## Overall Goal
