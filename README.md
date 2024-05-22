@@ -2,7 +2,17 @@
 
 
 ## Overall Goal
-## Framework
-## Dataset (initially, may change)
-## What models do you expect to use
 
+## Framework
+
+## Dataset (initially, may change)
+
+## Models
+
+## Experiments
+
+## Results
+
+## Source
+
+## NOtes
