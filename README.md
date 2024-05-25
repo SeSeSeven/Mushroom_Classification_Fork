@@ -7,6 +7,7 @@ Deploy a machine learning model capable of differentiating between various speci
 We will learn and improve based on [timm](https://huggingface.co/docs/timm/index), a collection of PyTorch image models, to obtain a suitable model for our specific classification task.
 
 ## Dataset
+### Data Introduction
 The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](https://www.kaggle.com/datasets/maysee/mushrooms-classification-common-genuss-images) from Kaggle. It comprises 6714 images across 9 different mushroom species:
 - **Agaricus**
 - **Amanita**
