@@ -10,6 +10,8 @@ We will learn and improve based on [timm](https://huggingface.co/docs/timm/index
 
 As timm contains pretrained models, we will use them as starting points. We plan to fine-tune them for our specific prediction task.
 
+Furthermore, we will use [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) to reduce boilerplate code and track our training experiments.
+
 ## Dataset
 ### Data Introduction
 The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](https://www.kaggle.com/datasets/maysee/mushrooms-classification-common-genuss-images) on Kaggle. It comprises 6714 images across 9 different mushroom genuses:
