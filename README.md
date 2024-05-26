@@ -12,9 +12,9 @@ Since we like to search for mushrooms in nature, this deployed model will help u
 When we search for mushrooms in the wild, we are often clueless about the mushrooms that we actually see, because we are not so knowledgeable about mushrooms in general. Deploying a classifier would therefore make this process more enjoyable, since we would be able to identify a mushroom's genus in real-time.
 
 ## :star: Framework
-We will use [timm](https://huggingface.co/docs/timm/index), a collection of PyTorch image models. As timm contains pretrained models, we will use them as starting points for the model that we eventually deploy. We plan to fine-tune them for our specific prediction task.
+We will use [`timm`](https://huggingface.co/docs/timm/index), a collection of PyTorch image models. As timm contains pretrained models, we will use them as starting points for the model that we eventually deploy. We plan to fine-tune them for our specific prediction task.
 
-Furthermore, we will use [PyTorch Lightning](https://github.com/Lightning-AI/pytorch-lightning) to reduce boilerplate code and track our training experiments.
+Furthermore, we will use [`PyTorch Lightning`](https://github.com/Lightning-AI/pytorch-lightning) to reduce boilerplate code and track our training experiments.
 
 ## :star: Dataset
 ### Data Introduction
@@ -31,7 +31,7 @@ In case we choose to add more data or change the dataset, other options include:
 ### Types of Models
 
 Our starting points will be
-- [Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), a pre-trained general purpose image classification model, since it [outperformed some other options on a related task](https://arxiv.org/pdf/2210.10351): poisonous mushroom classification.
+- [`Resnet50`](https://huggingface.co/timm/resnet50.a1_in1k), a pre-trained general purpose image classification model, since it [outperformed some other options on a related task](https://arxiv.org/pdf/2210.10351): poisonous mushroom classification.
 - A CNN that we train ourselves on only the mushroom data, as a baseline.
 
 ### Metrics
