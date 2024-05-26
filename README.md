@@ -37,4 +37,4 @@ Our starting points will be
 - [Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), a pre-trained general purpose image classification model, since it [outperformed some other options on a related task](https://arxiv.org/pdf/2210.10351): poisonous mushroom classification.
 - A CNN that we train ourselves on only the mushroom data, as a baseline.
 
-We will evaluate our models using classification accuracy, as it is natural for normal people.
+We will evaluate our models using classification accuracy, as it will feel more natural for potential users of our application who are not familiar with machine learning.
