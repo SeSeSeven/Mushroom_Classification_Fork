@@ -9,7 +9,7 @@ Since we like to search for mushrooms in nature, this deployed model will help u
 
 ### Value Proposition
 
-Deploying a classifier would therefore make this process more enjoyable, When we search for mushrooms in the wild, we are often clueless about the mushrooms that we actually see, because we are not so knowledgeable about mushrooms in generalsince we would be able to identify a mushroom's genus in real-time.
+When we search for mushrooms in the wild, we are often clueless about the mushrooms that we actually see, because we are not so knowledgeable about mushrooms in general. Deploying a classifier would therefore make this process more enjoyable, since we would be able to identify a mushroom's genus in real-time.
 
 ## Framework
 We will use [timm](https://huggingface.co/docs/timm/index), a collection of PyTorch image models. As timm contains pretrained models, we will use them as starting points for the model that we eventually deploy. We plan to fine-tune them for our specific prediction task.
