@@ -28,5 +28,5 @@ In case we choose to add more data or change the dataset, other options include:
 
 ## Models
 Our starting points will be
-- [Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), a pre-trained general purpose image classification model, since it outperformed some other options on a related task: https://arxiv.org/pdf/2210.10351 
-- A CNN that we train ourselves on only the mushroom data
+- [Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), a pre-trained general purpose image classification model, since it [outperformed some other options on a related task](https://arxiv.org/pdf/2210.10351): poisonous mushroom classification.
+- A CNN that we train ourselves on only the mushroom data, as a baseline.
