@@ -3,12 +3,16 @@
 ## Overall Goal
 Deploy a machine learning model capable of differentiating between various species of mushrooms based on images.
 
+Since we like to search for mushrooms in nature, this deployed model will help us learn more about the mushrooms that we see in the wild.
+
 ## Framework
 We will learn and improve based on [timm](https://huggingface.co/docs/timm/index), a collection of PyTorch image models, to obtain a suitable model for our specific classification task.
 
+As timm contains pretrained models, we will use them as starting points. We plan to fine-tune them for our specific prediction task.
+
 ## Dataset
 ### Data Introduction
-The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](https://www.kaggle.com/datasets/maysee/mushrooms-classification-common-genuss-images) from Kaggle. It comprises 6714 images across 9 different mushroom species:
+The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](https://www.kaggle.com/datasets/maysee/mushrooms-classification-common-genuss-images) from Kaggle. It comprises 6714 images across 9 different mushroom genuses:
 - **Agaricus**
 - **Amanita**
 - **Boletus**
@@ -23,7 +27,9 @@ The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](h
 The dataset will be divided into training and testing sets using a 4:1 split ratio.
 
 ## Models
-
+Our starting points will be
+[Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), since it outperformed some other options on a related task: https://arxiv.org/pdf/2210.10351 
+A to-be-determined CNN that we train ourselves on only the mushroom data
 
 ## Experiments
 Our experimental setup will include:
