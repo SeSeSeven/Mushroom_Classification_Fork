@@ -28,8 +28,8 @@ The dataset will be divided into training and testing sets using a 4:1 split rat
 
 ## Models
 Our starting points will be
-[Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), since it outperformed some other options on a related task: https://arxiv.org/pdf/2210.10351 
-A to-be-determined CNN that we train ourselves on only the mushroom data
+- [Resnet50](https://huggingface.co/timm/resnet50.a1_in1k), since it outperformed some other options on a related task: https://arxiv.org/pdf/2210.10351 
+- A CNN that we train ourselves on only the mushroom data
 
 ## Experiments
 Our experimental setup will include:
