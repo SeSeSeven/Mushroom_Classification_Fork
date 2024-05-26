@@ -34,7 +34,7 @@ Our starting points will be
 - [`Resnet50`](https://huggingface.co/timm/resnet50.a1_in1k), a pre-trained general purpose image classification model, since it [outperformed some other options on a related task](https://arxiv.org/pdf/2210.10351): poisonous mushroom classification.
 - A CNN that we train ourselves on only the mushroom data, as a baseline.
 
-Also, future iterations, and the eventually deployed model, are likely to come from `timm`.
+Also, future iterations, and the eventually deployed model, are likely to be fine-tuned models from `timm`.
 
 ### Metrics
 
