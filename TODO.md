@@ -42,6 +42,7 @@
 - Calculate the coverage
 - Get some continuous integration running on the GitHub repository
 - Create a data storage in GCP Bucket for your data and preferably link this with your data version control setup
+  - TODO: give every group member write access to this bucket
 - Create a trigger workflow for automatically building your docker images
 - Get your model training in GCP using either the Engine or Vertex AI
 - Create a FastAPI application that can do inference using your model
