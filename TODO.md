@@ -12,7 +12,7 @@
   - Done
 - Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
   - Done
-- Remember to comply with gte an envirood coding practices (PEP8) while doing the project
+- Remember to comply with good coding practices (PEP8) while doing the project
   - TODO
 - Do a bit of code typing and remember to document essential parts of your code
   - TODO
