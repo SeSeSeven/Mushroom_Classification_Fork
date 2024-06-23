@@ -1,0 +1,57 @@
+# Week 1
+- Create a git repository
+  - TODO: change the name
+- Make sure that all team members have write access to the GitHub repository
+  - Done
+- Create a dedicated environment for you project to keep track of your packages
+  - TODO: creaonment.yml file for conda
+- Create the initial file structure using cookiecutter
+  - TODO: discuss changes to the directory structure
+- Fill out the `make_dataset.py` file such that it downloads whatever data you need
+- Add a model file and a training script and get that running
+  - Done
+- Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
+  - Done
+- Remember to comply with gte an envirood coding practices (PEP8) while doing the project
+  - TODO
+- Do a bit of code typing and remember to document essential parts of your code
+  - TODO
+- Setup version control for your data or part of your data
+  - TODO
+- Construct one or multiple docker files for your code
+  - TODO
+- Build the docker files locally and make sure they work as intended
+  - TODO
+- Write one or multiple configurations files for your experiments
+  - TODO:
+    - Change the directory structure
+- Use Hydra to load the configurations and manage your hyperparameters
+  - TODO:
+    - Change the directory structure
+- When you have something that works somewhat, remember at some point to do some profiling and see if you can optimize your code
+  - TODO
+- Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally, consider running a hyperparameter optimization sweep.
+  - TODO:
+    - Change the directory structure
+- Use PyTorch-Lightning (if applicable) to reduce the amount of boilerplate in your code
+  - Done
+
+# Week 2
+- Write unit tests related to the data part of your code
+- Write unit tests related to model construction and or model training
+- Calculate the coverage
+- Get some continuous integration running on the GitHub repository
+- Create a data storage in GCP Bucket for your data and preferably link this with your data version control setup
+- Create a trigger workflow for automatically building your docker images
+- Get your model training in GCP using either the Engine or Vertex AI
+- Create a FastAPI application that can do inference using your model
+- If applicable, consider deploying the model locally using TorchServe
+- Deploy your model in GCP using either Functions or Run as the backend
+
+# Week 3
+- Check how robust your model is towards data drifting
+- Setup monitoring for the system telemetry of your deployed model
+- Setup monitoring for the performance of your deployed model
+- If applicable, play around with distributed data loading
+- If applicable, play around with distributed model training
+- Play around with quantization, compilation and pruning for your trained models to increase inference speed
