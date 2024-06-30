@@ -139,7 +139,7 @@ if __name__ == "__main__":
     # If sweep ID is not provided, train the model using just one set of hyperparameters
     # Else, run the sweep agent for multiple hyperparameter configurations
     project_name = args.project_name
-    sweep_id = args.sweep_id
+    sweep = args.sweep
     if sweep :
         wandb.login()
         with open('sweep.yaml') as file:
