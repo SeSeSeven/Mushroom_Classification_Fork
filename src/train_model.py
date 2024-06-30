@@ -122,10 +122,10 @@ if __name__ == "__main__":
         description="Main function for splitting dataset.",
     )
     parser.add_argument(
-        "--sweep",
+        "--use_sweep",
         "-s",
         type=bool,
-        default=True,
+        default=False,
         help="Use sweep or just train once",
     )
     parser.add_argument(
@@ -139,8 +139,8 @@ if __name__ == "__main__":
     # If sweep ID is not provided, train the model using just one set of hyperparameters
     # Else, run the sweep agent for multiple hyperparameter configurations
     project_name = args.project_name
-    sweep = args.sweep
-    if sweep :
+    use_sweep = args.use_sweep
+    if use_sweep:
         wandb.login()
         with open('sweep.yaml') as file:
             sweep_config = yaml.safe_load(file)
