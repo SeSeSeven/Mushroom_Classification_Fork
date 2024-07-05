@@ -9,7 +9,8 @@
   - TODO: discuss changes to the directory structure
 - Fill out the `make_dataset.py` file such that it downloads whatever data you need
 - Add a model file and a training script and get that running
-  - Done
+  - TODO
+  - Ziyu: modifying the predictions to directly predict classes
 - Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
   - Done
 - Remember to comply with good coding practices (PEP8) while doing the project
@@ -35,15 +36,15 @@
 - Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally, consider running a hyperparameter optimization sweep.
   - TODO:
     - Change the directory structure
+    - Ziming: configure a sweep that runs in a reasonable amount of time
 - Use PyTorch-Lightning (if applicable) to reduce the amount of boilerplate in your code
   - Done
 
 # Week 2
 - Write unit tests related to the data part of your code
-  - TODO:
-    - Write at least one meaningful test for all aspects of the application
+  - TODO
 - Write unit tests related to model construction and or model training
-  - 
+  - TODO
 - Calculate the coverage
   - TODO
 - Get some continuous integration running on the GitHub repository
