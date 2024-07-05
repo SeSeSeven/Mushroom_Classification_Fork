@@ -43,20 +43,29 @@
 # Week 2
 - Write unit tests related to the data part of your code
   - TODO
+  - Ziyu
 - Write unit tests related to model construction and or model training
   - TODO
+  - Ziyu
 - Calculate the coverage
   - TODO
+  - Ziyu
 - Get some continuous integration running on the GitHub repository
   - TODO
+  - Ziming
 - Create a data storage in GCP Bucket for your data and preferably link this with your data version control setup
-  - Done
+  - Yina
 - Create a trigger workflow for automatically building your docker images
-  - TODO
+  - TODO: test that it works
+  - Carson
+  - Done: set up a trigger to build in GCP
 - Get your model training in GCP using either the Engine or Vertex AI
   - TODO
+  - Carson
+  - Ziming
 - Create a FastAPI application that can do inference using your model
   - TODO
+  - Yina
 - If applicable, consider deploying the model locally using TorchServe
   - TODO
 - Deploy your model in GCP using either Functions or Run as the backend
