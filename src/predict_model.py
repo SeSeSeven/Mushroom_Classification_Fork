@@ -1,10 +1,9 @@
 import torch
+import numpy as np
+import argparse
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from PIL import Image, UnidentifiedImageError
-
-#import sys
-#sys.path.insert(0, '/content/drive/MyDrive/mushroom_classfication')
 
 from models.model import MushroomClassifier, get_model
 import pytorch_lightning as pl
@@ -37,7 +36,8 @@ def predict(data_dir, model_path, model_name, num_classes, batch_size=32):
         print(f"Batch of labels shape: {labels.shape}")
         break  # Just print the first batch for debugging purposes
     
-    all_preds = []
+    all_predictions = []
+    all_probabilities = []
     trainer = pl.Trainer(accelerator='gpu' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu', devices=1 if torch.cuda.is_available() else "auto")
     
     # Define a custom predict_step to handle the batch correctly
@@ -55,9 +55,11 @@ def predict(data_dir, model_path, model_name, num_classes, batch_size=32):
 
     predictions = trainer.predict(custom_model, dataloaders=test_loader)
     for batch_preds in predictions:
-        all_preds.extend(batch_preds.cpu().numpy())
-    
-    return all_preds
+        probabilities = torch.softmax(batch_preds.cpu(), dim=1)
+        _, predicted = torch.max(probabilities, 1)
+        all_predictions.extend(predicted.numpy())
+        all_probabilities.extend(probabilities.numpy())
+    return all_predictions, all_probabilities
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -97,5 +99,7 @@ if __name__ == "__main__":
     model_path = args.model_path
     num_classes = args.num_classes
     model_name = "hf_hub:timm/" + args.model_name
-    predictions = predict(data_dir, model_path, model_name, num_classes)
+    predictions, probabilities = predict(data_dir, model_path, model_name, num_classes)
+    np.save("/predictions.npy", predictions)
+    np.save("/prob.npy", probabilities)
     print(predictions)
