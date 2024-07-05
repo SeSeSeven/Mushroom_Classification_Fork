@@ -4,7 +4,7 @@
 - Make sure that all team members have write access to the GitHub repository
   - Done
 - Create a dedicated environment for you project to keep track of your packages
-  - TODO: creaonment.yml file for conda
+  - TODO: create environment.yml file for conda
 - Create the initial file structure using cookiecutter
   - TODO: discuss changes to the directory structure
 - Fill out the `make_dataset.py` file such that it downloads whatever data you need
@@ -17,11 +17,13 @@
 - Do a bit of code typing and remember to document essential parts of your code
   - TODO
 - Setup version control for your data or part of your data
-  - TODO
+  - Done: set up GCP bucket for data
 - Construct one or multiple docker files for your code
-  - TODO
+  - TODO:
+  - Done: a crippled version that we can use to test deployment
 - Build the docker files locally and make sure they work as intended
   - TODO
+  - Done: the above crippled version
 - Write one or multiple configurations files for your experiments
   - TODO:
     - Change the directory structure
@@ -38,16 +40,26 @@
 
 # Week 2
 - Write unit tests related to the data part of your code
+  - TODO:
+    - Write at least one meaningful test for all aspects of the application
 - Write unit tests related to model construction and or model training
+  - 
 - Calculate the coverage
+  - TODO
 - Get some continuous integration running on the GitHub repository
+  - TODO
 - Create a data storage in GCP Bucket for your data and preferably link this with your data version control setup
-  - TODO: give every group member write access to this bucket
+  - Done
 - Create a trigger workflow for automatically building your docker images
+  - TODO
 - Get your model training in GCP using either the Engine or Vertex AI
+  - TODO
 - Create a FastAPI application that can do inference using your model
+  - TODO
 - If applicable, consider deploying the model locally using TorchServe
+  - TODO
 - Deploy your model in GCP using either Functions or Run as the backend
+  - TODO
 
 # Week 3
 - Check how robust your model is towards data drifting
