@@ -30,10 +30,11 @@ class MyImageFolder(datasets.ImageFolder):
             return self.__getitem__(new_index)
 
 @hydra.main(version_base=None, config_path="hydra_conf", config_name="config")
-def train_model(cfg: DictConfig, sweep: bool = True):
+def train_model(cfg: DictConfig):
     print(OmegaConf.to_yaml(cfg))
     # Extract hyperparameters from Hydra configuration
     data_dir = cfg.data_dir
+    sweep = cfg.sweep
     model_name = cfg.model.model_name
     num_classes = cfg.model.num_classes
     data_transforms = cfg.model.data_transforms
@@ -143,10 +144,14 @@ if __name__ == "__main__":
     use_sweep = args.use_sweep
     if use_sweep:
         wandb.login()
-        with open('sweep.yaml') as file:
+        cur_file_path = os.path.abspath(__file__)
+        print(f"Current file path: {cur_file_path}")
+        # Get the directory containing the current file
+        cur_dir = os.path.dirname(cur_file_path)
+        with open(os.path.join(cur_dir,'sweep.yaml')) as file:
             sweep_config = yaml.safe_load(file)
         sweep_id = wandb.sweep(sweep=sweep_config, project=project_name)
         wandb.agent(sweep_id, function=train_model, project=project_name, entity="lmu_mlops")
     else:
-        train_model(sweep=False)
+        train_model()
         
