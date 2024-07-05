@@ -137,13 +137,29 @@ if __name__ == "__main__":
         default="mushroom_classification",
         help="Project Name",
     )
+    parser.add_argument(
+        "--wandb_api",
+        "-w",
+        type=str,
+        default="mushroom_classification",
+        help="Project Name",
+    )
+    parser.add_argument(
+        "--wandb_entity",
+        "-t",
+        type=str,
+        default="entity",
+        help="Entity",
+    )
     args = parser.parse_args()
     # If sweep ID is not provided, train the model using just one set of hyperparameters
     # Else, run the sweep agent for multiple hyperparameter configurations
     project_name = args.project_name
     use_sweep = args.use_sweep
+    api = args.wandb_api
+    entity = args.wandb_entity
     if use_sweep:
-        wandb.login()
+        wandb.login(api)
         cur_file_path = os.path.abspath(__file__)
         print(f"Current file path: {cur_file_path}")
         # Get the directory containing the current file
@@ -151,7 +167,7 @@ if __name__ == "__main__":
         with open(os.path.join(cur_dir,'sweep.yaml')) as file:
             sweep_config = yaml.safe_load(file)
         sweep_id = wandb.sweep(sweep=sweep_config, project=project_name)
-        wandb.agent(sweep_id, function=train_model, project=project_name, entity="lmu_mlops")
+        wandb.agent(sweep_id, function=train_model, count=4, project=project_name, entity=entity)
     else:
         train_model()
         
