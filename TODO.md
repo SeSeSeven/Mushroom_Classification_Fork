@@ -54,6 +54,7 @@
   - TODO
   - Ziming
 - Create a data storage in GCP Bucket for your data and preferably link this with your data version control setup
+  - Done
   - Yina
 - Create a trigger workflow for automatically building your docker images
   - TODO: test that it works
