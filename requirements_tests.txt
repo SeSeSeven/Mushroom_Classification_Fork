@@ -1,0 +1,5 @@
+# additional packages for tests
+coverage==7.5.1
+pytest==8.2.0
+pytest-ordering==0.6
+ruff==0.5.1

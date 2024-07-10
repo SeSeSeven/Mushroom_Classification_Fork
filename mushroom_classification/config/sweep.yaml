@@ -1,0 +1,14 @@
+method: bayes
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  model.lr:
+    min: 1e-5
+    max: 1e-2
+    distribution: log_uniform_values
+  train.batch_size:
+    values: [16, 32]
+  train.epochs:
+    values: [5, 10]
+count: 4
