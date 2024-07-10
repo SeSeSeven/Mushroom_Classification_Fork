@@ -8,7 +8,7 @@ SCRIPTS_DIR := mushroom_classification
 TEST_DIR := tests
 COV_REPORT_DIR := reports/coverage
 
-RAW_DIR := data/raw
+RAW_DIR := data/Mushroom_Image_Dataset
 PROCESSED_DIR := data/processed
 RANDOM_STATE := 42
 SAVE_MODEL := models/resnet50.ckpt
