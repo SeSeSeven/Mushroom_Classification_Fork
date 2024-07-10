@@ -6,7 +6,7 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
-COPY requirements_test.txt requirements_test.txt
+COPY requirements_tests.txt requirements_tests.txt
 COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
 
