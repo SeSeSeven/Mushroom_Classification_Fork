@@ -1,4 +1,4 @@
-name: mushroom_classification_local_test_run_0710
+name: mushroom_classification
 channels:
   - conda-forge
   - defaults
