@@ -8,7 +8,7 @@ SCRIPTS_DIR := mushroom_classification
 TEST_DIR := tests
 COV_REPORT_DIR := reports/coverage
 
-RAW_DIR := data/Mushroom_Image_Dataset
+RAW_DIR := data/raw
 PROCESSED_DIR := data/processed
 RANDOM_STATE := 42
 SAVE_MODEL := models/resnet50.ckpt
@@ -34,7 +34,7 @@ VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visualization/visualize.py
 all: make_dataset train_model predict_model visualize
 
 # Target to create the dataset
-make_dataset: pull_data
+make_dataset:
 	$(PYTHON) $(MAKE_DATASET_SCRIPT) -d $(RAW_DIR) -p $(PROCESSED_DIR) -v $(VAL_SIZE) -t $(TEST_SIZE) -r $(RANDOM_STATE)
 
 # Target to train the model
