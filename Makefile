@@ -1,126 +1,80 @@
-## This defines all targets as phony targets, i.e. targets that are always out of date
-## This is done to ensure that the commands are always executed, even if a file with the same name exists
-## See https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
-## Remove this if you want to use this Makefile for real targets
-.PHONY: *
+# Makefile
 
-#################################################################################
-# GLOBALS                                                                       #
-#################################################################################
+.PHONY: all make_dataset train_model predict_model visualize test pull_data lint coverage build_docker run_docker run_pipeline
 
-PROJECT_NAME = src
-PYTHON_VERSION = 3.11
-PYTHON_INTERPRETER = python
+# Define your Python executable and script names
+PYTHON := python
+SCRIPTS_DIR := mushroom_classification
+TEST_DIR := tests
+COV_REPORT_DIR := reports/coverage
 
-#################################################################################
-# COMMANDS                                                                      #
-#################################################################################
+RAW_DIR := data/raw
+PROCESSED_DIR := data/processed
+RANDOM_STATE := 42
+SAVE_MODEL := models/resnet50.ckpt
+MODEL_NAME := resnet50.a1_in1k
+NUM_CLASSES := 9
+BATCH_SIZE := 32
+OUTPUT_DIR := outputs
+VAL_SIZE := 0.15
+TEST_SIZE := 0.15
+RANDOM_STATE := 42
+PREDICTION_PATH := outputs/predictions.npy
+REPORT_DIR := reports/figures
+NUM_IMAGES := 16
+FIGURE_ARRANGE := "(4,4)"
+METRICS_PATH := outputs/metrics.csv
 
-## Set up python interpreter environment
-create_environment:
-	conda create --name $(PROJECT_NAME) python=$(PYTHON_VERSION) --no-default-packages -y
+MAKE_DATASET_SCRIPT := $(SCRIPTS_DIR)/data/make_dataset.py
+TRAIN_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/train_model.py
+PREDICT_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/predict_model.py
+VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visulaization/visualize.py
 
-## Install Python Dependencies
-requirements:
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	$(PYTHON_INTERPRETER) -m pip install -e .
+# Default target
+all: make_dataset train_model predict_model visualize
 
-## Install Developer Python Dependencies
-dev_requirements: requirements
-	$(PYTHON_INTERPRETER) -m pip install .["dev"]
+# Target to create the dataset
+make_dataset: pull_data
+	$(PYTHON) $(MAKE_DATASET_SCRIPT) -d $(RAW_DIR) -p $(PROCESSED_DIR) -v $(VAL_SIZE) -t $(TEST_SIZE) -r $(RANDOM_STATE)
 
-## Delete all compiled Python files
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
+# Target to train the model
+train_model:
+	$(PYTHON) $(TRAIN_MODEL_SCRIPT)
 
+# Target to predict using the model
+predict_model:
+	$(PYTHON) $(PREDICT_MODEL_SCRIPT) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -n $(MODEL_NAME) -c $(NUM_CLASSES) -b $(BATCH_SIZE) -o $(OUTPUT_DIR)
 
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
-
-## Prepare the dataset
-data:
-	python $(PROJECT_NAME)/data/make_dataset.py
-
-## Train the model
-train:
-	python $(PROJECT_NAME)/train_model.py
-
-## Predict using the model
-predict:
-	python $(PROJECT_NAME)/predict_model.py
-## Visualize the results
+# Target to visualize the results
 visualize:
-	python src/visualization/visualize.py
-#################################################################################
-# Documentation RULES                                                           #
-#################################################################################
+	$(PYTHON) $(VISUALIZE_SCRIPT) -p $(PROCESSED_DIR) -e $(PREDICTION_PATH) -o $(REPORT_DIR) -i $(NUM_IMAGES) -f $(FIGURE_ARRANGE) -r $(RANDOM_STATE) -m $(METRICS_PATH)
 
-## Build documentation
-build_documentation: dev_requirements
-	mkdocs build --config-file docs/mkdocs.yaml --site-dir build
+# Target to pull data with DVC
+pull_data:
+	dvc pull
 
-## Serve documentation
-serve_documentation: dev_requirements
-	mkdocs serve --config-file docs/mkdocs.yaml
+# Target to run linter
+lint:
+	ruff check $(SCRIPTS_DIR)
+	ruff check $(TEST_DIR)
 
-#################################################################################
-# Self Documenting Commands                                                     #
-#################################################################################
+# Target to run tests
+test:
+	pytest $(TEST_DIR)
 
-.DEFAULT_GOAL := help
+# Target to generate coverage report
+coverage:
+	coverage run -m pytest $(TEST_DIR)
+	coverage report
+	coverage html -d $(COV_REPORT_DIR)
 
-# Inspired by <http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html>
-# sed script explained:
-# /^##/:
-# 	* save line in hold space
-# 	* purge line
-# 	* Loop:
-# 		* append newline + line to hold space
-# 		* go to next line
-# 		* if line starts with doc comment, strip comment character off and loop
-# 	* remove target prerequisites
-# 	* append hold space (+ newline) to line
-# 	* replace newline plus comments by `---`
-# 	* print line
-# Separate expressions are necessary because labels cannot be delimited by
-# semicolon; see <http://stackoverflow.com/a/11799865/1968>
-.PHONY: help
-help:
-	@echo "$$(tput bold)Available commands:$$(tput sgr0)"
-	@sed -n -e "/^## / { \
-		h; \
-		s/.*//; \
-		:doc" \
-		-e "H; \
-		n; \
-		s/^## //; \
-		t doc" \
-		-e "s/:.*//; \
-		G; \
-		s/\\n## /---/; \
-		s/\\n/ /g; \
-		p; \
-	}" ${MAKEFILE_LIST} \
-	| awk -F '---' \
-		-v ncol=$$(tput cols) \
-		-v indent=19 \
-		-v col_on="$$(tput setaf 6)" \
-		-v col_off="$$(tput sgr0)" \
-	'{ \
-		printf "%s%*s%s ", col_on, -indent, $$1, col_off; \
-		n = split($$2, words, " "); \
-		line_length = ncol - indent; \
-		for (i = 1; i <= n; i++) { \
-			line_length -= length(words[i]) + 1; \
-			if (line_length <= 0) { \
-				line_length = ncol - indent - length(words[i]) - 1; \
-				printf "\n%*s ", -indent, " "; \
-			} \
-			printf "%s ", words[i]; \
-		} \
-		printf "\n"; \
-	}' \
-	| more $(shell test $(shell uname) = Darwin && echo '--no-init --raw-control-chars')
+# Target to build the Docker image
+build_docker:
+	docker build -f mushroom.dockerfile . -t mushroom:latest
+
+# Target to run the Docker container
+run_docker:
+	docker run --name mc1 mushroom:latest
+
+# Target to run the entire pipeline
+run_pipeline: pull_data lint test coverage make_dataset train_model predict_model visualize
