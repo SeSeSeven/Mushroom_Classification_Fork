@@ -8,3 +8,5 @@ dependencies:
   - pip:
       - -e .
       - -r requirements.txt
+      - -r requirements_dev.txt
+      - -r requirements_test.txt
