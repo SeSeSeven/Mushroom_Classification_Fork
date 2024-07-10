@@ -96,12 +96,9 @@ def train_model(cfg: DictConfig) -> None:
         # Initialize WandbLogger
         wandb_logger = WandbLogger(project=os.getenv("WANDB_PROJECT"))
 
-    # Set accelerator to GPU if available, else fallback to CPU
-    accelerator = 'gpu' if torch.cuda.is_available() else 'cpu'
-
     trainer = pl.Trainer(
         max_epochs=epochs,
-        accelerator=accelerator,
+        accelerator="auto",
         devices="auto",  # Automatically select available devices
         callbacks=[checkpoint_callback],
         logger=wandb_logger if sweep else None

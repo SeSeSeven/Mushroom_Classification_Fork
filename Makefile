@@ -28,13 +28,13 @@ METRICS_PATH := outputs/metrics.csv
 MAKE_DATASET_SCRIPT := $(SCRIPTS_DIR)/data/make_dataset.py
 TRAIN_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/train_model.py
 PREDICT_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/predict_model.py
-VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visulaization/visualize.py
+VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visualization/visualize.py
 
 # Default target
 all: make_dataset train_model predict_model visualize
 
 # Target to create the dataset
-make_dataset: pull_data
+make_dataset:
 	$(PYTHON) $(MAKE_DATASET_SCRIPT) -d $(RAW_DIR) -p $(PROCESSED_DIR) -v $(VAL_SIZE) -t $(TEST_SIZE) -r $(RANDOM_STATE)
 
 # Target to train the model
