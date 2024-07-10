@@ -1,4 +1,4 @@
-name: mushroom_classification
+name: mushroom_classification_local_test_run_0710
 channels:
   - conda-forge
   - defaults
@@ -6,4 +6,5 @@ dependencies:
   - python >= 3.8
   - pip
   - pip:
-    - -r requirements.txt
+      - -e .
+      - -r requirements.txt
