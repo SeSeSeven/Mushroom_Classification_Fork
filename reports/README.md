@@ -106,18 +106,16 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 >
 > Answer:
 
---- question 1 fill here ---
 
 ### Question 2
 > **Enter the study number for each member in the group**
 >
 > Example:
 >
-> 12846293, 19110558, 12803283
 >
-> Answer:
-
---- question 2 fill here ---
+>
+Answer:
+12846293, 19110558, 12803283
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -131,8 +129,6 @@ The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](h
 |-|----------|---------|---------|-------------|----------|-----------|-----------|---------|---------|
 | Count | 353 | 750 | 1073 | 836 | 364 | 316 | 1563 | 1148 | 311 |
 
---- question 3 fill here ---
-
 ## Coding environment
 
 > In the following section we are interested in learning more about you local development environment.
@@ -144,7 +140,8 @@ The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](h
 >
 > Recommended answer length: 100-200 words
 >
-> Answer:
+> 
+Answer:
 We used conda, docker, and git to manage our dependencies. We created a conda environment to make sure that the dependencies of our project do not cross-contaminate with others. The packages required can be found in the requirements.txt and requirements_test.txt file
 
 To get a complete copy of our development environment, one could:
@@ -169,7 +166,8 @@ docker build -f mushroom.dockerfile . -t mushroom:latest.
 >
 > Recommended answer length: 100-200 words
 >
-> Answer:
+> 
+nswer:
 We used cookiecutter template for our project but also did some changes. 
 
 - `mushroom_classification` is rename of src for cookiecutter template, so that we use flat-layout. This contains code for the project:
@@ -379,8 +377,6 @@ Lastly, in the third screenshot [this figure](figures/wandb3.png), we explored t
 
 These metrics are crucial for optimizing model training and deployment strategies, ensuring that our machine learning models perform effectively in various scenarios. They provide insights into how different factors influence model outcomes, guiding iterative improvements and informed decision-making throughout the project lifecycle.
 
---- question 14 fill here ---
-
 ### Question 15
 
 > **Docker is an important tool for creating containerized applications. Explain how you used docker in your experiments? Include how you would run your docker images and include a link to one of your docker files.**
@@ -391,8 +387,8 @@ These metrics are crucial for optimizing model training and deployment strategie
 > *For our project we developed several images: one for training, inference and deployment. For example to run the*
 > *training docker image: `docker run trainer:latest lr=1e-3 batch_size=64`. Link to docker file: <weblink>*
 >
-> Answer:
-
+> 
+Answer:
 In our project setup, we utilized Dockerfiles to set up the environment and run necessary build processes. The Dockerfile was configured to install dependencies and execute a makefile for building the application inside the container. This allowed us to create consistent development environments locally using `docker build` commands.
 
 For automated builds and deployment, we integrated with cloud-based CI/CD pipelines. These pipelines were triggered automatically upon pushing code changes. They initiated the build process using cloud build services, ensuring that our Docker images were updated and pushed to a container registry. This streamlined approach facilitated seamless updates and deployments across different environments.
@@ -404,7 +400,8 @@ Moreover, we leveraged Vertex AI for running our containerized applications in p
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
 > **try to profile your code or do you think it is already perfect?**
 >
-> Answer:
+> 
+Answer:
 Debugging:
 - Print Statements
       We frequently used print() statements to trace the execution flow and inspect variable values at different points in the code. This helped us quickly identify where the code was deviating from expected behavior.
@@ -430,8 +427,8 @@ Profiling: ***[to be finished] ???***
 > Example:
 > *We used the following two services: Engine and Bucket. Engine is used for... and Bucket is used for...*
 >
-> Answer:
-
+> 
+Answer:
 In our project, we utilized several Google Cloud Platform (GCP) services:
 
 Cloud Storage (Bucket): Used for scalable object storage, ideal for storing static assets and large data sets with global accessibility.
@@ -470,29 +467,26 @@ By leveraging Compute Engine in the Europe-West region, we benefited from Google
 > **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
 > **You can take inspiration from [this figure](figures/bucket.png).**
 >
-> Answer:
+> 
+Answer:
 You can take inspiration from [this figure](figures/Cloud_Storage.png).
-
---- question 19 fill here ---
 
 ### Question 20
 
 > **Upload one image of your GCP artifact registry, such that we can see the different images that you have stored.**
 > **You can take inspiration from [this figure](figures/registry.png).**
 >
-> Answer:
+> 
+Answer:
 You can take inspiration from [this figure](figures/Artifact_Registry.png).
-
---- question 20 fill here ---
 
 ### Question 21
 
 > **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in your project. You can take inspiration from [this figure](figures/build.png).**
 >
-> Answer:
+> 
+Answer:
 You can take inspiration from [this figure](figures/Cloud_Build_HIstory.png).
-
---- question 21 fill here ---
 
 ### Question 22
 
@@ -506,14 +500,13 @@ You can take inspiration from [this figure](figures/Cloud_Build_HIstory.png).
 > *worked. Afterwards we deployed it in the cloud, using ... . To invoke the service an user would call*
 > *`curl -X POST -F "file=@file.json"<weburl>`*
 >
-> Answer:
+> 
+Answer:
 Unfortunately, we encountered challenges while attempting to deploy our model using Google Cloud Run and FastAPI. Despite our efforts, the deployment process did not succeed due to issues such as configuration complexities or compatibility issues with our model and the deployment environment.
 
 We faced obstacles in containerizing our model effectively and ensuring it ran seamlessly on Cloud Run. These challenges may have stemmed from dependencies, runtime configurations, or specific requirements of our model that were not fully addressed during deployment.
 
 However, we are actively working to resolve these issues by refining our containerization strategy, addressing dependencies, and ensuring compatibility with the Cloud Run environment. Once resolved, we plan to deploy our model to Cloud Run, leveraging FastAPI for efficient API development and deployment. This approach will enable us to invoke our deployed service via HTTP requests, providing scalable and reliable model inference capabilities in a serverless environment.
-
-***[need fastapi] ***
 
 ### Question 23
 
@@ -526,8 +519,8 @@ However, we are actively working to resolve these issues by refining our contain
 > *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
 > *measure ... and ... that would inform us about this ... behaviour of our application.*
 >
-> Answer:
-
+> 
+Answer:
 We did implement monitoring for our deployed model. Using WandB, we logged various metrics and runtime resources during model inference. This allowed us to track performance metrics such as accuracy, latency, and resource utilization over time. Additionally, we utilized Google Cloud's logging capabilities to store logs in Cloud Storage buckets, providing insights into application behavior and operational status.
 
 Monitoring plays a crucial role in ensuring the longevity of our application. It enables us to detect anomalies, identify performance bottlenecks, and optimize resource allocation. With continuous monitoring, we can make data-driven decisions to improve reliability, scalability, and user experience. This proactive approach helps maintain high application availability and responsiveness, ensuring our deployed model operates efficiently and meets performance expectations over its lifecycle.
@@ -542,8 +535,8 @@ Monitoring plays a crucial role in ensuring the longevity of our application. It
 > *Group member 1 used ..., Group member 2 used ..., in total ... credits was spend during development. The service*
 > *costing the most was ... due to ...*
 >
-> Answer:
-
+> 
+Answer:
 During the project, we used a total of 1.41 credits. Carson used 0.4 credits, and Yina used 0.4 credits. The service costing the most was Google Cloud Platform's Compute Engine due to extensive model training and deployment activities.
 
 ## Overall discussion of project
@@ -563,7 +556,8 @@ During the project, we used a total of 1.41 credits. Carson used 0.4 credits, an
 > *The starting point of the diagram is our local setup, where we integrated ... and ... and ... into our code.*
 > *Whenever we commit code and push to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
-> Answer:
+> 
+Answer:
 
 | Step 1 | Step 2 | Step 3 | Step 4 |
 |--------|--------|--------|--------|
@@ -585,8 +579,8 @@ From GitHub, the code is deployed to our cloud server. In the cloud, we utilize 
 > Example:
 > *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
 >
-> Answer:
-
+> 
+Answer:
 In our project, we encountered several substantial challenges that required dedicated effort and strategic adjustments to overcome. Initially, achieving satisfactory model accuracy was a significant hurdle. We invested considerable time in fine-tuning hyperparameters, adjusting model architectures, and optimizing training procedures to enhance performance. This iterative process involved rigorous experimentation and meticulous monitoring of results to identify the most effective configurations.
 
 Another notable challenge involved data management with Google Cloud Storage (GCS). We faced initial difficulties with data loading and saving operations within GCS buckets. To resolve this issue, we refactored our code to streamline data handling processes, ensuring smooth integration and efficient utilization of GCS for storage and retrieval tasks.
@@ -597,14 +591,13 @@ Additionally, integrating and configuring tools like Weights & Biases (WandB) pr
 
 Throughout the project, effective communication and collaboration among team members were essential. Regular discussions and shared insights facilitated brainstorming of solutions and prompt implementation of necessary adjustments. By leveraging expertise and maintaining a structured approach to problem-solving, we successfully navigated these challenges, ensuring progress towards achieving our project goals effectively and efficiently.
 
-
-
 ### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
 > **make sure all members contributed actively to the project**
 >
-> Answer:
+> 
+Answer:
 Ziyu contributed to model development, Dockerfile creation, writing unit tests related to data parts of the code, and calculating coverage.
 
 Ziming participated in model development, setting up DVC (Data Version Control), creating GCS (Google Cloud Storage) buckets, logging with WandB, writing hyperparameter sweeps, implementing Hydra for configuration management, setting up trigger workflows for automated Docker image builds, and writting reports.
