@@ -1,7 +1,7 @@
 import logging
 import os
 import pytorch_lightning as pl
-from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.callbacks import ModelCheckpoint, Callback
 import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
@@ -26,6 +26,14 @@ class SafeImageFolder(datasets.ImageFolder):
             print(f"Skipping corrupted image at index {index}")
             new_index = (index + 1) % len(self)
             return self.__getitem__(new_index)
+
+class SaveModelPTCallback(Callback):
+    """Save also .pt file of the model at the end of training"""
+    def __init__(self, save_file):
+        super().__init__()
+        self.save_file = save_file
+    def on_train_end(self, trainer, pl_module):
+        torch.save(pl_module.state_dict(), self.save_file)
 
 @hydra.main(version_base=None, config_path=_PATH_CONF, config_name="hydra")
 def train_model(cfg: DictConfig) -> None:
@@ -92,6 +100,8 @@ def train_model(cfg: DictConfig) -> None:
         mode='min',
     )
 
+    save_model_pt_callback = SaveModelPTCallback(save_file=Path(save_path, save_name+'.pt'))
+
     if sweep:
         # Initialize WandbLogger
         wandb_logger = WandbLogger(project=os.getenv("WANDB_PROJECT"))
@@ -100,7 +110,7 @@ def train_model(cfg: DictConfig) -> None:
         max_epochs=epochs,
         accelerator="auto",
         devices="auto",  # Automatically select available devices
-        callbacks=[checkpoint_callback],
+        callbacks=[checkpoint_callback, save_model_pt_callback],
         logger=wandb_logger if sweep else None
     )
 

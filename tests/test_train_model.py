@@ -76,5 +76,6 @@ def test_train_model(setup_directories):
     train_model(cfg)
 
     # Check if model checkpoint is saved
-    assert os.path.exists(Path(model_dir, 'test_model.ckpt')), "Model checkpoint not saved"
+    assert os.path.exists(Path(model_dir, 'test_model.ckpt')), "Model checkpoint ckpt not saved"
+    assert os.path.exists(Path(model_dir, 'test_model.pt')), "Model checkpoint pt not saved"
 

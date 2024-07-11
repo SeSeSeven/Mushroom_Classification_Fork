@@ -1,3 +1,0 @@
-[2024-07-09 16:53:11,305][timm.models._builder][INFO] - Loading pretrained weights from Hugging Face hub (timm/resnet50.a1_in1k)
-[2024-07-09 16:53:13,178][timm.models._hub][INFO] - [timm/resnet50.a1_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
-[2024-07-09 16:55:16,069][root][ERROR] - Error loading dataset: [Errno 2] No such file or directory: 'None/../../../data/processed/train'

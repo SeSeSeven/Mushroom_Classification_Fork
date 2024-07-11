@@ -28,13 +28,13 @@ METRICS_PATH := outputs/metrics.csv
 MAKE_DATASET_SCRIPT := $(SCRIPTS_DIR)/data/make_dataset.py
 TRAIN_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/train_model.py
 PREDICT_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/predict_model.py
-VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visualization/visualize.py
+VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visulaization/visualize.py
 
 # Default target
 all: make_dataset train_model predict_model visualize
 
 # Target to create the dataset
-make_dataset:
+make_dataset: pull_data
 	$(PYTHON) $(MAKE_DATASET_SCRIPT) -d $(RAW_DIR) -p $(PROCESSED_DIR) -v $(VAL_SIZE) -t $(TEST_SIZE) -r $(RANDOM_STATE)
 
 # Target to train the model
@@ -72,22 +72,49 @@ coverage:
 build_docker:
 	docker build -f mushroom.dockerfile . -t mushroom:latest
 
-build_docker_predict:
-	docker build -f predict.dockerfile . -t predict:latest
-
 # Target to run the Docker container
 run_docker:
 	docker run --name mc1 mushroom:latest
 
-run_docker_local:
-	docker run --name mc1 -v $(pwd)/models:/models/ mushroom:latest
-
-run_docker_predict:
-	docker run --name predict1 predict:latest
-
 # Target to run the entire pipeline
 run_pipeline: pull_data lint test coverage make_dataset train_model predict_model visualize
 
-train_model: train_model
-
-predict_model: predict_model visualize
+.PHONY: help
+help:
+	@echo "$$(tput bold)Available rules:$$(tput sgr0)"
+	@echo
+	@sed -n -e "/^## / { \
+		h; \
+		s/.*//; \
+		:doc" \
+		-e "H; \
+		n; \
+		s/^## //; \
+		t doc" \
+		-e "s/:.*//; \
+		G; \
+		s/\\n## /---/; \
+		s/\\n/ /g; \
+		p; \
+	}" ${MAKEFILE_LIST} \
+	| LC_ALL='C' sort --ignore-case \
+	| awk -F '---' \
+		-v ncol=$$(tput cols) \
+		-v indent=19 \
+		-v col_on="$$(tput setaf 6)" \
+		-v col_off="$$(tput sgr0)" \
+	'{ \
+		printf "%s%*s%s ", col_on, -indent, $$1, col_off; \
+		n = split($$2, words, " "); \
+		line_length = ncol - indent; \
+		for (i = 1; i <= n; i++) { \
+			line_length -= length(words[i]) + 1; \
+			if (line_length <= 0) { \
+				line_length = ncol - indent - length(words[i]) - 1; \
+				printf "\n%*s ", -indent, " "; \
+			} \
+			printf "%s ", words[i]; \
+		} \
+		printf "\n"; \
+	}' \
+	| more $(shell test $(shell uname) = Darwin && echo '--no-init --raw-control-chars')
