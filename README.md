@@ -54,14 +54,8 @@ We will evaluate our models using classification accuracy, as it will feel more 
 | Hygrocybe  | 23.0           | 7.0             | 956.0          | 25.0            | 0.968348 | 0.766667  | 0.479167| 0.589744 |
 | Agaricus   | 6.0            | 16.0            | 942.0          | 47.0            | 0.937685 | 0.272727  | 0.113208| 0.160000 |
 
-
 ## :star: Rebuild
 
-### Reproduce using the newest build (Docker image):
-The newest build of the repo is provided as an docker image stored on google cloud. Image can be pulled from the Google Cloud Container with the following command:
-```bash
-docker pull gcr.io/linear-rig-337909/group5_proj_cpu_container:latest
-```
 ### How to install
 Installing the project on your machine should be straighforward although Pytorch Geometric can cause some trouble. Clone the repo:
 ```bash
@@ -71,11 +65,12 @@ conda activate myenv
 cd Mushroom_Classification
 pip install -r requirements.txt
 ```
+
 ### How to run
 Make sure data in located in data/raw with each class-named subfolder containing images.
 You can use
 ```bash
-pull_data
+make pull_data
 ```
 Remember to change parameter values in Makefile and mushroom_classification/config/
 ```bash
@@ -102,22 +97,22 @@ export WANDB_ENTITY=***********
 ## :star: Project Structure
 ------------
 
-    ├── Makefile                 <- Makefile with commands like `make data` etc.
-    ├── README.md                <- The top-level README for developers using this project.
-    ├── docs                     <- A default Sphinx project; see sphinx-doc.org for details
-    ├── models                   <- Save trained model.
-    ├── mushroom_classification  <- Source code for use in this project.
-    │   ├── __init__.py          <- Makes mushroom_classification a Python module.
+    ├── Makefile                  <- Makefile with commands like `make data` etc.
+    ├── README.md                 <- The top-level README for developers using this project.
+    ├── docs                      <- A default Sphinx project; see sphinx-doc.org for details
+    ├── models                    <- Save trained model.
+    ├── mushroom_classification   <- Source code for use in this project.
+    │   ├── __init__.py           <- Makes mushroom_classification a Python module.
     │   │
-    │   ├── config               <- Config files.
+    │   ├── config                <- Config files.
     │   │   ├── hydra.yaml
     │   │   └── sweep.yaml
     │   │
-    │   ├── data                 <- Scripts to process data.
+    │   ├── data                  <- Scripts to process data.
     │   │   ├── __init__.py
     │   │   └── make_dataset.py
     │   │
-    │   ├── models               <- Scripts to train models and then use it to make predictions.
+    │   ├── models                <- Scripts to train models and then use it to make predictions.
     │   │   ├── __init__.py
     │   │   ├── model.py
     │   │   ├── predict_model.py
@@ -126,7 +121,20 @@ export WANDB_ENTITY=***********
     │   └── visualization         <- Scripts to create visualization plots for predictions.
     │       ├── __init__.py
     │       └── visualize.py
-    ├── tests                     <- Scripts for unitests.
+    │
+    ├── outputs                   <- Generated analysis as HTML, PDF, LaTeX, etc.
+    │   ├── metrics.csv
+    │   ├── predictions.npy
+    │   └── true_labels.py
+    │
+    ├── reports                   <- Reports related.
+    │   ├── figures
+    │   │   └── *.png
+    │   ├── README.md
+    │   ├── *.html                <- Reports for coverage.
+    │   └── report.py
+    │
+    ├── tests                     <- Scripts for tests.
     │   ├── __init__.py
     │   ├── test_make_dataset.py
     │   ├── test_model.py
@@ -134,22 +142,18 @@ export WANDB_ENTITY=***********
     │   ├── test_train_model.py
     │   └── test_visualize.py
     │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
+    ├── data.dvc          
     |
-    ├── pyproject.toml         <- Data dictionaries, manuals, and all other explanatory materials.
+    ├── pyproject.toml
     │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
+    ├── requirements.txt           <- The requirements file for reproducing the model environment.
     │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
+    ├── requirements_test.txt      <- The requirements file for reproducing the analysis environment.
+    |
+    ├── mushroom.dockerfile 
     │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
+    └── setup.py                   <- makes project pip installable (pip install -e .) so src can be imported
 
 --------
+
 
