@@ -471,6 +471,7 @@ By leveraging Compute Engine in the Europe-West region, we benefited from Google
 > **You can take inspiration from [this figure](figures/bucket.png).**
 >
 > Answer:
+You can take inspiration from [this figure](figures/Cloud_Storage.png).
 
 --- question 19 fill here ---
 
@@ -480,6 +481,7 @@ By leveraging Compute Engine in the Europe-West region, we benefited from Google
 > **You can take inspiration from [this figure](figures/registry.png).**
 >
 > Answer:
+You can take inspiration from [this figure](figures/Artifact_Registry.png).
 
 --- question 20 fill here ---
 
@@ -488,6 +490,7 @@ By leveraging Compute Engine in the Europe-West region, we benefited from Google
 > **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in your project. You can take inspiration from [this figure](figures/build.png).**
 >
 > Answer:
+You can take inspiration from [this figure](figures/Cloud_Build_HIstory.png).
 
 --- question 21 fill here ---
 
