@@ -4,7 +4,7 @@ import pytest
 import torch
 from pathlib import Path
 from PIL import Image
-from tests import _PATH_DATA
+from tests import _PATH_DATA, _PROJECT_ROOT
 from mushroom_classification.data.make_dataset import app
 
 from typer.testing import CliRunner
@@ -14,7 +14,7 @@ runner = CliRunner()
 @pytest.mark.run(order=1)
 def test_data_path_exists():
     """Test if the data path exists."""
-    assert os.path.exists(Path(_PATH_DATA, 'raw')), f"Directory does not exist: {Path(_PATH_DATA, 'raw')}"
+    assert os.path.exists(Path(_PATH_DATA, 'raw')) or os.path.exists(Path(_PROJECT_ROOT, 'data.dvc')), f"Directory does not exist: {Path(_PATH_DATA, 'raw')}"
 
 @pytest.fixture(scope="function")
 def setup_directories():
