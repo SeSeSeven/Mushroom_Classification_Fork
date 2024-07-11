@@ -294,18 +294,17 @@ Nevertheless, the use of DVC still brought several important benefits: First, it
 >
 > 
 Answer:
-单元测试：我们在'tests'目录下维护了一套全面的单元测试。这些测试覆盖了'mushroom_classification'模块的各个组件，确保核心功能正常工作。
-模型测试：'models_test'目录专门用于测试我们的机器学习模型。这包括模型训练、预测和评估的测试。
-Linting和代码风格检查：我们使用.github_notdone目录（可能是.github的临时名称）来存储GitHub Actions的配置文件，其中包括运行pylint或flake8等工具进行代码质量检查。
-多环境测试：我们的CI流程在多个操作系统（如Ubuntu、macOS和Windows）和不同的Python版本上运行测试，以确保跨平台兼容性。
-Docker集成测试：通过'docker-compose.yaml'和各种Dockerfile（如'mushroom.dockerfile'和'predict.dockerfile'），我们进行容器化测试，确保应用在Docker环境中正常运行。
-缓存优化：我们利用GitHub Actions的缓存功能来存储pip依赖项，这大大减少了每次CI运行的时间。
-DVC集成：我们使用DVC（'.dvc'和'data.dvc'文件表明）进行数据版本控制，确保模型训练使用正确的数据集版本。
-文档和报告生成：CI流程还包括自动更新'docs'目录下的文档和生成'reports'目录下的测试报告。
+Our continuous integration setup with GitHub Actions is structured to enforce high code quality and streamline our development processes. Key components include linting, Docker image building, and multi-environment testing.
 
-我们的CI配置分为多个工作流文件，每个文件负责特定的任务。例如，一个用于linting和代码风格检查，一个用于单元测试和模型测试，另一个用于Docker构建和集成测试。
-一个典型的GitHub Actions工作流示例可以在我们的存储库中的.github/workflows/main.yml文件中找到。（注意：由于使用了.github_notdone，您可能需要重命名或移动此目录以激活GitHub Actions。）
-通过这种全面的CI设置，我们能够快速识别并解决潜在问题，确保代码库的健康状态，并提高团队的开发效率。
+Linting: We utilize tools like flake8 to enforce Python coding standards, ensuring consistent code style and catching potential errors early in the development cycle.
+
+Docker Image Building: Our pipeline includes steps to build Docker images, ensuring that our application is packaged correctly and ready for deployment across different environments.
+
+Multi-Environment Testing: We test compatibility with various Python versions to ensure consistent performance and functionality across diverse setups.
+
+Caching: To optimize build times, we implement caching for dependencies and build artifacts. This reduces redundant installations and speeds up our CI runs, enhancing overall workflow efficiency.
+
+In conclusion, our setup with GitHub Actions integrates linting, Docker image building, and multi-environment testing to maintain code quality, ensure deployment readiness, and optimize development efficiency through effective caching strategies.
 
 ## Running code and tracking experiments
 
@@ -372,6 +371,13 @@ Answer:
 > *As seen in the second image we are also tracking ... and ...*
 >
 > Answer:
+As seen in the first screenshot [this figure](figures/wandb1.png), we tracked the validation loss and epochs across various hyperparameter sweeps. This allowed us to analyze how different configurations impacted model performance. By monitoring validation loss, we aimed to identify the parameter combinations that resulted in the lowest loss, indicating optimal model performance.
+
+In the second screenshot [this figure](figures/wandb2.png), we focused on tracking parameter importance. This metric helps us understand which hyperparameters have the most significant impact on model outcomes. This analysis guides us in prioritizing hyperparameter tuning efforts effectively, ensuring resources are allocated where they can yield the most substantial improvements in model performance.
+
+Lastly, in the third screenshot [this figure](figures/wandb3.png), we explored the effects of different combinations of learning rates, batch sizes, and epochs on validation loss. This comprehensive analysis allowed us to fine-tune these critical parameters for optimal model convergence and accuracy.
+
+These metrics are crucial for optimizing model training and deployment strategies, ensuring that our machine learning models perform effectively in various scenarios. They provide insights into how different factors influence model outcomes, guiding iterative improvements and informed decision-making throughout the project lifecycle.
 
 --- question 14 fill here ---
 
@@ -387,22 +393,11 @@ Answer:
 >
 > Answer:
 
-在我们的项目中，Docker 在确保实验环境一致性和可重现性方面发挥了关键作用。我们使用了一个统一的 Dockerfile（mushroom.dockerfile）来构建包含完整项目环境的镜像，这个镜像可以用于训练、预测和部署等多个阶段。
+In our project setup, we utilized Dockerfiles to set up the environment and run necessary build processes. The Dockerfile was configured to install dependencies and execute a makefile for building the application inside the container. This allowed us to create consistent development environments locally using `docker build` commands.
 
-要运行训练过程，我们使用如下命令：
-Copydocker run -v $(pwd)/data:/app/data mushroom-classifier:latest python train_model.py --lr 0.001 --batch_size 32
+For automated builds and deployment, we integrated with cloud-based CI/CD pipelines. These pipelines were triggered automatically upon pushing code changes. They initiated the build process using cloud build services, ensuring that our Docker images were updated and pushed to a container registry. This streamlined approach facilitated seamless updates and deployments across different environments.
 
-这个命令挂载本地数据目录到容器中，并传入学习率和批量大小等超参数。
-
-对于预测服务，我们使用：
-Copydocker run -p 8000:8000 mushroom-classifier:latest python predict.py
-这会启动一个预测服务并将其暴露在 8000 端口。
-
-通过使用单一的 Dockerfile，我们简化了开发流程，确保了训练和预测环境的完全一致性。这种方法虽然可能导致镜像体积较大，但大大降低了环境不一致带来的问题风险。
-
-您可以在这里查看我们的 Dockerfile：
-https://github.com/cxzhang4/Mushroom_Classification/blob/main/mushroom.dockerfile
-这种统一的 Docker 设置帮助我们标准化了整个工作流程，从开发到部署，确保了实验的可重复性和结果的一致性。
+Moreover, we leveraged Vertex AI for running our containerized applications in production. By deploying our Docker images on Vertex AI, we benefited from managed services for scalability, monitoring, and efficient resource utilization, ensuring reliable performance and operational efficiency. This setup enabled us to maintain a reliable and scalable deployment process while leveraging cloud infrastructure for enhanced capabilities.
 
 ### Question 16
 
@@ -439,17 +434,17 @@ Profiling: ***[to be finished] ???***
 
 In our project, we utilized several Google Cloud Platform (GCP) services:
 
-Compute Engine: Used to create and manage virtual machines (VMs) that run our applications and perform computations. It offers flexibility in choosing VM configurations based on compute, memory, and storage requirements.
+Cloud Storage (Bucket): Used for scalable object storage, ideal for storing static assets and large data sets with global accessibility.
 
-AI Platform: Employed for building, deploying, and scaling machine learning models. It provides tools for training models at scale, hyperparameter tuning, and serving predictions via endpoints.
+Compute Engine: Provides virtual machines (VMs) for running applications and scalable workloads, offering flexibility in machine types and configurations.
 
-Cloud Storage: Used for storing and accessing data objects securely at scale. It offers different storage classes like Standard, Nearline, and Coldline, suited for various data access patterns and cost considerations.
+Cloud Build: A CI/CD platform that automates build, test, and deployment processes, ensuring consistent and efficient software delivery pipelines.
 
-BigQuery: Utilized for analyzing large datasets using SQL-like queries. It enables fast, interactive analysis of data, integration with machine learning for predictive analytics, and real-time insights.
+Vertex AI: A unified platform for machine learning (ML) and AI tasks, facilitating model training, deployment, and management at scale.
 
-Cloud Pub/Sub: Used for asynchronous messaging between applications. It provides scalable, reliable messaging for decoupling systems and handling data streams in real-time.
+Cloud Run: A serverless platform for deploying containerized applications, automatically scaling based on traffic to manage microservices and APIs efficiently.
 
-Cloud SQL: Deployed for managed SQL databases. It supports MySQL, PostgreSQL, and SQL Server, providing high availability, automatic backups, and seamless integration with other GCP services.
+Artifact Registry: Used for storing and managing container images and artifacts securely. It integrates with other Google Cloud services, providing versioning and access control for artifacts.
 
 ### Question 18
 
@@ -464,11 +459,11 @@ Cloud SQL: Deployed for managed SQL databases. It supports MySQL, PostgreSQL, an
 >
 > 
 Answer:
-我们在项目中广泛使用了 Google Cloud Platform 的 Compute Engine。Compute Engine 的主要用途是配置虚拟机 (VM) 来运行我们的机器学习模型和数据处理任务。具体来说，我们使用具有高 CPU 和内存配置的 VM 实例来高效处理大规模数据处理和模型训练。
+In our project, we utilized Google Cloud Platform's Compute Engine extensively, deploying instances specifically in the Europe-West region (Belgium). This choice ensured our applications and services were hosted closer to our target audience in Europe, optimizing latency and improving overall performance.
 
-对于我们的特定工作负载，我们选择了具有高内存机器（例如 n1-highmem-8）等配置的 VM，以确保有足够的内存资源进行数据密集型计算。此外，我们利用自定义机器类型根据应用程序的要求定制 CPU 和内存规格，从而优化成本和性能。
+For our Compute Engine instances, we selected VMs configured under the N1 Standard machine type with SSD storage. These VMs provided the necessary computational power and storage capacity to support various aspects of our workload, including data processing, application hosting, and backend services.
 
-此外，我们使用 Kubernetes Engine 在这些 VM 实例上部署了自定义容器，使我们能够无缝管理和扩展应用程序。这种方法使我们能够有效利用 Compute Engine 的可扩展性和灵活性来满足我们项目的计算需求。
+By leveraging Compute Engine in the Europe-West region, we benefited from Google Cloud's robust infrastructure and reliability, ensuring high availability and efficient resource utilization. This deployment strategy helped us meet both performance and compliance requirements while effectively managing our cloud resources for optimal results in our project.
 
 ### Question 19
 
@@ -509,6 +504,11 @@ Answer:
 > *`curl -X POST -F "file=@file.json"<weburl>`*
 >
 > Answer:
+Unfortunately, we encountered challenges while attempting to deploy our model using Google Cloud Run and FastAPI. Despite our efforts, the deployment process did not succeed due to issues such as configuration complexities or compatibility issues with our model and the deployment environment.
+
+We faced obstacles in containerizing our model effectively and ensuring it ran seamlessly on Cloud Run. These challenges may have stemmed from dependencies, runtime configurations, or specific requirements of our model that were not fully addressed during deployment.
+
+However, we are actively working to resolve these issues by refining our containerization strategy, addressing dependencies, and ensuring compatibility with the Cloud Run environment. Once resolved, we plan to deploy our model to Cloud Run, leveraging FastAPI for efficient API development and deployment. This approach will enable us to invoke our deployed service via HTTP requests, providing scalable and reliable model inference capabilities in a serverless environment.
 
 ***[need fastapi] ***
 
@@ -525,17 +525,9 @@ Answer:
 >
 > Answer:
 
-我们确实为已部署的模型实施了监控。监控设置涉及几个关键组件：
+We did implement monitoring for our deployed model. Using WandB, we logged various metrics and runtime resources during model inference. This allowed us to track performance metrics such as accuracy, latency, and resource utilization over time. Additionally, we utilized Google Cloud's logging capabilities to store logs in Cloud Storage buckets, providing insights into application behavior and operational status.
 
-日志记录：我们利用 Google Cloud Logging 捕获和分析由我们的应用程序和模型推理请求生成的日志。这有助于我们跟踪错误、性能指标和运营见解。
-
-指标：我们在 Google Cloud Monitoring 中设置了自定义指标，以跟踪模型性能的特定方面，例如响应时间、吞吐量和资源利用率（CPU、内存）。
-
-警报：使用 Google Cloud Monitoring，我们根据预定义的阈值为错误率或延迟等指标配置警报。这使我们能够主动解决问题并确保可靠的服务可用性。
-
-仪表板：我们在 Google Cloud Monitoring 中创建了一个自定义仪表板，以可视化实时和历史性能指标。这为监控已部署模型的运行状况和性能提供了一个集中视图。
-
-监控对于我们应用程序的寿命至关重要，因为它可以持续评估性能，识别潜在的瓶颈或异常，并有助于做出明智的决策以进行优化或扩展调整。它确保我们的模型保持可靠，在不同负载下表现良好，并随着时间的推移满足服务水平目标。
+Monitoring plays a crucial role in ensuring the longevity of our application. It enables us to detect anomalies, identify performance bottlenecks, and optimize resource allocation. With continuous monitoring, we can make data-driven decisions to improve reliability, scalability, and user experience. This proactive approach helps maintain high application availability and responsiveness, ensuring our deployed model operates efficiently and meets performance expectations over its lifecycle.
 
 ### Question 24
 
@@ -592,32 +584,17 @@ From GitHub, the code is deployed to our cloud server. In the cloud, we utilize 
 >
 > Answer:
 
-In this project, we encountered three major challenges: improving model accuracy and generalization, deploying the model in the cloud, and setting up a robust continuous integration pipeline.
+In our project, we encountered several substantial challenges that required dedicated effort and strategic adjustments to overcome. Initially, achieving satisfactory model accuracy was a significant hurdle. We invested considerable time in fine-tuning hyperparameters, adjusting model architectures, and optimizing training procedures to enhance performance. This iterative process involved rigorous experimentation and meticulous monitoring of results to identify the most effective configurations.
 
-**Model Accuracy and Generalization:**
-The biggest challenge we faced was enhancing our model's accuracy and ensuring its ability to generalize across diverse mushroom images. Given the vast number of mushroom species and their varying appearances at different growth stages, creating a model that could accurately classify across this spectrum was difficult. To overcome this:
+Another notable challenge involved data management with Google Cloud Storage (GCS). We faced initial difficulties with data loading and saving operations within GCS buckets. To resolve this issue, we refactored our code to streamline data handling processes, ensuring smooth integration and efficient utilization of GCS for storage and retrieval tasks.
 
-We experimented with various state-of-the-art deep learning architectures, including ResNet, EfficientNet, and Vision Transformer.
-We implemented transfer learning, utilizing models pre-trained on large-scale image datasets to improve our mushroom classification task.
-We employed extensive data augmentation techniques such as rotation, scaling, color jittering, and random cropping to increase the diversity of our training data.
+Optimizing hyperparameter sweeps also presented challenges due to extended runtime and resource consumption. To address this, we implemented strategies such as limiting the maximum number of concurrent runs per sweep and optimizing workload distribution. These adjustments helped maintain efficiency while exploring a diverse range of parameter combinations.
 
-**Cloud Deployment:**
-Deploying our model in the cloud presented its own set of challenges. We needed to ensure high availability, scalability, and cost-effectiveness. Our approach was:
+Additionally, integrating and configuring tools like Weights & Biases (WandB) proved challenging initially, particularly with setting up the WandB API within Docker environments. We overcame this hurdle by adopting secure environment variables (secrets) to simplify API configuration and ensure seamless integration with our workflow for experiment tracking and analysis.
 
-Containerizing our application using Docker for consistency across development and production environments.
+Throughout the project, effective communication and collaboration among team members were essential. Regular discussions and shared insights facilitated brainstorming of solutions and prompt implementation of necessary adjustments. By leveraging expertise and maintaining a structured approach to problem-solving, we successfully navigated these challenges, ensuring progress towards achieving our project goals effectively and efficiently.
 
-???
 
-**Continuous Integration Setup:**
-Establishing a reliable continuous integration (CI) pipeline was crucial for maintaining code quality and ensuring smooth deployments. The challenges here included:
-
-Integrating multiple tools and services into a cohesive pipeline.
-Ensuring fast build times to provide quick feedback to developers.
-Setting up comprehensive automated tests, including unit tests, integration tests, and end-to-end tests for our ML pipeline.
-
-To address these, we:
-
-???
 
 ### Question 27
 
@@ -625,7 +602,15 @@ To address these, we:
 > **make sure all members contributed actively to the project**
 >
 > Answer:
-Ziyu:
-      - code writing 
-      - docker building
+Ziyu contributed to model development, Dockerfile creation, writing unit tests related to data parts of the code, and calculating coverage.
+
+Ziming participated in model development, setting up DVC (Data Version Control), creating GCS (Google Cloud Storage) buckets, logging with WandB, writing hyperparameter sweeps, implementing Hydra for configuration management, setting up trigger workflows for automated Docker image builds, and writting reports.
+
+Yina contributed to setting up DVC for data versioning, creating GCS buckets for data storage, writing project reports, and configuring trigger workflows for automated Docker image builds.
+
+Collectively, all team members collaborated on:
+- Creating the Git repository and initializing the project structure.
+- Using Cookiecutter to set up the initial file structure.
+- Writing configuration files specific to the project.
+- Compiling dependencies into the requirements.txt file based on project needs.
 
