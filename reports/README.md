@@ -115,6 +115,7 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 >
 >
 Answer:
+
 12846293, 19110558, 12803283
 
 ### Question 3
@@ -122,7 +123,9 @@ Answer:
 >
 > Recommended answer length: 100-200 words.
 >
-> Answer: We used the third-party framework [`timm`](https://huggingface.co/docs/timm/index) (PyTorch Image Models) framework, specifically the resnet50.a1_in1k model, for our project. timm's seamless integration with PyTorch made it easy to customize and fine-tune the resnet50.a1_in1k model according to our specific requirements. It provided us with a comprehensive library of pre-trained models and a variety of image processing tools, enabling us to complete it efficiently and achieve goood results. Additionally, we used W&B to handle hyperparameters and visualize training process.
+> Answer: 
+
+We used the third-party framework [`timm`](https://huggingface.co/docs/timm/index) (PyTorch Image Models) framework, specifically the resnet50.a1_in1k model, for our project. timm's seamless integration with PyTorch made it easy to customize and fine-tune the resnet50.a1_in1k model according to our specific requirements. It provided us with a comprehensive library of pre-trained models and a variety of image processing tools, enabling us to complete it efficiently and achieve goood results. Additionally, we used W&B to handle hyperparameters and visualize training process.
 
 The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](https://www.kaggle.com/datasets/maysee/mushrooms-classification-common-genuss-images) :mushroom: on Kaggle. It comprises 6714 images across 9 different mushroom genuses:
 |  | Agaricus | Amanita | Boletus | Cortinarius | Entoloma | Hygrocybe | Lactarius | Russula | Suillus |
@@ -142,6 +145,7 @@ The dataset chosen for this project is the :mushroom: [Mushroom Image dataset](h
 >
 > 
 Answer:
+
 We used conda, docker, and git to manage our dependencies. We created a conda environment to make sure that the dependencies of our project do not cross-contaminate with others. The packages required can be found in the requirements.txt and requirements_test.txt file
 
 To get a complete copy of our development environment, one could:
@@ -168,6 +172,7 @@ docker build -f mushroom.dockerfile . -t mushroom:latest.
 >
 > 
 nswer:
+
 We used cookiecutter template for our project but also did some changes. 
 
 - `mushroom_classification` is rename of src for cookiecutter template, so that we use flat-layout. This contains code for the project:
@@ -193,7 +198,9 @@ We used cookiecutter template for our project but also did some changes.
 >
 > 
 
-Answer: We used:
+Answer: 
+
+We used:
       - MyPy: static type checks. Help catch type-related errors early in the development process.
       - ruff: PEP8 styling checks.
       - pytest: automated testing. Verify the correctness of our code.
@@ -216,6 +223,7 @@ Why matters:
 >
 > 
 Answer:
+
 We have 6 tests: 
 1. Test if raw dataset exists. It ensures that the necessary data is available before any processing steps are carried out.
 2. Test data splitting process. 
@@ -243,6 +251,7 @@ We have 6 tests:
 >
 > 
 Answer:
+
 The total code coverage of code is 54%, which includes all our source code. 
 
 Even having a code coverage of 100% does not guarantee that the code is error-free, it only indicate that each line of code has been executed, not that every possible input, edge case, or scenario has been tested. 
@@ -255,8 +264,8 @@ Even having a code coverage of 100% does not guarantee that the code is error-fr
 > **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
-> 
 Answer:
+
 Yes, our workflow included using branches and pull requests. Each team member worked on a separate branch for initial coding to ensure that individual contributions were isolated and did not interfere with others' work. During our meetings, we reviewed each other's changes and merged the results. With the first constrauction of basic but complete structures, we merged the work into the main branch. Then, after each modification, we checked the changes together, created pull requests, and conducted a thorough review before merging them into the main branch.
 
 
@@ -265,14 +274,8 @@ Yes, our workflow included using branches and pull requests. Each team member wo
 > **Did you use DVC for managing data in your project? If yes, then how did it improve your project to have version**
 > **control of your data. If no, explain a case where it would be beneficial to have version control of your data.**
 >
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *We did make use of DVC in the following way: ... . In the end it helped us in ... for controlling ... part of our*
-> *pipeline*
->
-> 
 Answer:
+
 We did use DVC in our project, and it went through an evolutionary process. Initially, we used Google Drive as remote storage, and later migrated to a GCP bucket. Although we set up data versioning, our dataset did not actually change throughout the project.
 
 Nevertheless, the use of DVC still brought several important benefits: First, it simplified the data synchronization process between team members, ensuring that everyone was using the same version of the dataset. Second, it prepared for future data updates, and if the dataset needed to be modified or extended, we already had the appropriate infrastructure. In addition, DVC seamlessly integrated with our code version control, making the reproducibility of experiments greatly improved. Finally, by separating large data files from the code repository, we significantly improved the performance and efficiency of the version control system.
@@ -282,16 +285,9 @@ Nevertheless, the use of DVC still brought several important benefits: First, it
 > **Discuss you continuous integration setup. What kind of continuous integration are you running (unittesting,**
 > **linting, etc.)? Do you test multiple operating systems, Python  version etc. Do you make use of caching? Feel free**
 > **to insert a link to one of your GitHub actions workflow.**
->
-> Recommended answer length: 200-300 words.
->
-> Example:
-> *We have organized our continuous integration into 3 separate files: one for doing ..., one for running ... testing*
-> *and one for running ... . In particular for our ..., we used ... .An example of a triggered workflow can be seen*
-> *here: <weblink>*
->
 > 
 Answer:
+
 Our continuous integration setup with GitHub Actions is structured to enforce high code quality and streamline our development processes. Key components include linting, Docker image building, and multi-environment testing.
 
 Linting: We utilize tools like flake8 to enforce Python coding standards, ensuring consistent code style and catching potential errors early in the development cycle.
@@ -316,6 +312,7 @@ In conclusion, our setup with GitHub Actions integrates linting, Docker image bu
 >
 > 
 Answer:
+
 We configured our experiments using config files, which allow us to manage and modify the parameters of our experiments easily without changing the code for training session. `hydra.yaml` and `sweep.yaml` save parameters for hydra and W&B sweeping. Additionally, we used the typer library to create a command-line interface (CLI) for running our experiments, which made it easier to handle different configurations and experiment setups.
 ```
 # make data
@@ -337,6 +334,7 @@ python mushroom_classification/visualization/visualize.py --processed_dir data/p
 >
 > 
 Answer:
+
 - Config Files:
       We used YAML configuration files to set and store all hyperparameters and settings for our experiments. This included parameters like batch size, learning rate etc. By doing so, we ensured that anyone could easily see and understand which parameters were used for training.
 
@@ -360,15 +358,9 @@ Answer:
 > **Upload 1 to 3 screenshots that show the experiments that you have done in W&B (or another experiment tracking**
 > **service of your choice). This may include loss graphs, logged images, hyperparameter sweeps etc. You can take**
 > **inspiration from [this figure](figures/wandb.png). Explain what metrics you are tracking and why they are**
-> **important.**
->
-> Recommended answer length: 200-300 words + 1 to 3 screenshots.
->
-> Example:
-> *As seen in the first image when have tracked ... and ... which both inform us about ... in our experiments.*
-> *As seen in the second image we are also tracking ... and ...*
->
+> 
 > Answer:
+
 As seen in the first screenshot [this figure](figures/wandb1.png), we tracked the validation loss and epochs across various hyperparameter sweeps. This allowed us to analyze how different configurations impacted model performance. By monitoring validation loss, we aimed to identify the parameter combinations that resulted in the lowest loss, indicating optimal model performance.
 
 In the second screenshot [this figure](figures/wandb2.png), we focused on tracking parameter importance. This metric helps us understand which hyperparameters have the most significant impact on model outcomes. This analysis guides us in prioritizing hyperparameter tuning efforts effectively, ensuring resources are allocated where they can yield the most substantial improvements in model performance.
@@ -389,6 +381,7 @@ These metrics are crucial for optimizing model training and deployment strategie
 >
 > 
 Answer:
+
 In our project setup, we utilized Dockerfiles to set up the environment and run necessary build processes. The Dockerfile was configured to install dependencies and execute a makefile for building the application inside the container. This allowed us to create consistent development environments locally using `docker build` commands.
 
 For automated builds and deployment, we integrated with cloud-based CI/CD pipelines. These pipelines were triggered automatically upon pushing code changes. They initiated the build process using cloud build services, ensuring that our Docker images were updated and pushed to a container registry. This streamlined approach facilitated seamless updates and deployments across different environments.
@@ -402,6 +395,7 @@ Moreover, we leveraged Vertex AI for running our containerized applications in p
 >
 > 
 Answer:
+
 Debugging:
 - Print Statements
       We frequently used print() statements to trace the execution flow and inspect variable values at different points in the code. This helped us quickly identify where the code was deviating from expected behavior.
@@ -410,9 +404,7 @@ Debugging:
 - GitHub Copilot
       We utilized this to assist with code suggestions and error handling.
 - Online Resources
-      We referred to online documentation, forums like Stack Overflow, and resources to get insights and suggestions on resolving specific errors or optimizing our code.
-
-Profiling: ***[to be finished] ???***
+      We referred to online documentation, forums like Stack Overflow, and resources to get insights and suggestions on resolving specific errors or optimizing our model.
 
 ## Working in the cloud
 
@@ -429,6 +421,7 @@ Profiling: ***[to be finished] ???***
 >
 > 
 Answer:
+
 In our project, we utilized several Google Cloud Platform (GCP) services:
 
 Cloud Storage (Bucket): Used for scalable object storage, ideal for storing static assets and large data sets with global accessibility.
@@ -456,6 +449,7 @@ Artifact Registry: Used for storing and managing container images and artifacts 
 >
 > 
 Answer:
+
 In our project, we utilized Google Cloud Platform's Compute Engine extensively, deploying instances specifically in the Europe-West region (Belgium). This choice ensured our applications and services were hosted closer to our target audience in Europe, optimizing latency and improving overall performance.
 
 For our Compute Engine instances, we selected VMs configured under the N1 Standard machine type with SSD storage. These VMs provided the necessary computational power and storage capacity to support various aspects of our workload, including data processing, application hosting, and backend services.
@@ -469,6 +463,7 @@ By leveraging Compute Engine in the Europe-West region, we benefited from Google
 >
 > 
 Answer:
+
 You can take inspiration from [this figure](figures/Cloud_Storage.png).
 
 ### Question 20
@@ -478,6 +473,7 @@ You can take inspiration from [this figure](figures/Cloud_Storage.png).
 >
 > 
 Answer:
+
 You can take inspiration from [this figure](figures/Artifact_Registry.png).
 
 ### Question 21
@@ -486,6 +482,7 @@ You can take inspiration from [this figure](figures/Artifact_Registry.png).
 >
 > 
 Answer:
+
 You can take inspiration from [this figure](figures/Cloud_Build_HIstory.png).
 
 ### Question 22
@@ -502,6 +499,7 @@ You can take inspiration from [this figure](figures/Cloud_Build_HIstory.png).
 >
 > 
 Answer:
+
 Unfortunately, we encountered challenges while attempting to deploy our model using Google Cloud Run and FastAPI. Despite our efforts, the deployment process did not succeed due to issues such as configuration complexities or compatibility issues with our model and the deployment environment.
 
 We faced obstacles in containerizing our model effectively and ensuring it ran seamlessly on Cloud Run. These challenges may have stemmed from dependencies, runtime configurations, or specific requirements of our model that were not fully addressed during deployment.
@@ -521,6 +519,7 @@ However, we are actively working to resolve these issues by refining our contain
 >
 > 
 Answer:
+
 We did implement monitoring for our deployed model. Using WandB, we logged various metrics and runtime resources during model inference. This allowed us to track performance metrics such as accuracy, latency, and resource utilization over time. Additionally, we utilized Google Cloud's logging capabilities to store logs in Cloud Storage buckets, providing insights into application behavior and operational status.
 
 Monitoring plays a crucial role in ensuring the longevity of our application. It enables us to detect anomalies, identify performance bottlenecks, and optimize resource allocation. With continuous monitoring, we can make data-driven decisions to improve reliability, scalability, and user experience. This proactive approach helps maintain high application availability and responsiveness, ensuring our deployed model operates efficiently and meets performance expectations over its lifecycle.
@@ -537,6 +536,7 @@ Monitoring plays a crucial role in ensuring the longevity of our application. It
 >
 > 
 Answer:
+
 During the project, we used a total of 1.41 credits. Carson used 0.4 credits, and Yina used 0.4 credits. The service costing the most was Google Cloud Platform's Compute Engine due to extensive model training and deployment activities.
 
 ## Overall discussion of project
@@ -581,6 +581,7 @@ From GitHub, the code is deployed to our cloud server. In the cloud, we utilize 
 >
 > 
 Answer:
+
 In our project, we encountered several substantial challenges that required dedicated effort and strategic adjustments to overcome. Initially, achieving satisfactory model accuracy was a significant hurdle. We invested considerable time in fine-tuning hyperparameters, adjusting model architectures, and optimizing training procedures to enhance performance. This iterative process involved rigorous experimentation and meticulous monitoring of results to identify the most effective configurations.
 
 Another notable challenge involved data management with Google Cloud Storage (GCS). We faced initial difficulties with data loading and saving operations within GCS buckets. To resolve this issue, we refactored our code to streamline data handling processes, ensuring smooth integration and efficient utilization of GCS for storage and retrieval tasks.
@@ -598,9 +599,10 @@ Throughout the project, effective communication and collaboration among team mem
 >
 > 
 Answer:
-Ziyu contributed to model development, Dockerfile creation, writing unit tests related to data parts of the code, and calculating coverage.
 
-Ziming participated in model development, setting up DVC (Data Version Control), creating GCS (Google Cloud Storage) buckets, logging with WandB, writing hyperparameter sweeps, implementing Hydra for configuration management, setting up trigger workflows for automated Docker image builds, and writting reports.
+Ziyu contributed to model development, Dockerfile creation, writing unit test, calculating coverage, checking styling, setting up config files(sweep, hydra), writing all other files and writing reports.
+
+Ziming participated in model development, setting up DVC (Data Version Control), creating GCS (Google Cloud Storage) buckets, logging with WandB, writing hyperparameter sweeps, implementing Hydra for configuration management, setting up trigger workflows for automated Docker image builds, and writing reports.
 
 Yina contributed to setting up DVC for data versioning, creating GCS buckets for data storage, writing project reports, and configuring trigger workflows for automated Docker image builds.
 
