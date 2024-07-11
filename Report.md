@@ -113,7 +113,7 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 >
 > Example:
 >
-> *sXXXXXX, sXXXXXX, sXXXXXX*
+> 12846293, 19110558, 12803283
 >
 > Answer:
 
