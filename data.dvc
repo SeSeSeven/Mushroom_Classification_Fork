@@ -1,6 +1,14 @@
+md5: 5e022382b2e66ae0fe3f82f41972d553
+frozen: true
+deps:
+- md5: 07357d67ba1aa2e9676b8e2b21917688.dir
+  size: 994306149
+  nfiles: 6718
+  hash: md5
+  path: gs://mushrooms_for_mount/data
 outs:
-- md5: 97590c88bdf27c73644343bbd2f1b458.dir
-  size: 16584968
-  nfiles: 111
+- md5: 719253002b2c654edb5f3963cece1fcb.dir
+  size: 994306149
+  nfiles: 6718
   hash: md5
   path: data
