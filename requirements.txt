@@ -1,6 +1,7 @@
+google-cloud==0.34.0
+gsutil==5.27
 hydra-core==1.3.2
 matplotlib==3.8.4
-mushroom_classification==0.0.1
 numpy==2.0.0
 omegaconf==2.3.0
 pandas==2.2.2

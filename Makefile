@@ -72,9 +72,22 @@ coverage:
 build_docker:
 	docker build -f mushroom.dockerfile . -t mushroom:latest
 
+build_docker_predict:
+	docker build -f predict.dockerfile . -t predict:latest
+
 # Target to run the Docker container
 run_docker:
 	docker run --name mc1 mushroom:latest
 
+run_docker_local:
+	docker run --name mc1 -v $(pwd)/models:/models/ mushroom:latest
+
+run_docker_predict:
+	docker run --name predict1 predict:latest
+
 # Target to run the entire pipeline
 run_pipeline: pull_data lint test coverage make_dataset train_model predict_model visualize
+
+train_model: train_model
+
+predict_model: predict_model visualize
