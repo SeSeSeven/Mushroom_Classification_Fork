@@ -4,14 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mushroom_classification"
-version = "0.0.1"
+version = "0.1.0"
 description = "image classfication for 9 mushrooms"
 authors = [
-  { name = "mushroom_classfication_group", email = "your@email.com" },
+  { name = "Carson", email = "Carson.Zhang@campus.lmu.de" },
+  { name = "Yina", email = "Yina.Yao@campus.lmu.de" },
+  { name = "Ziming", email = "Ziming.Zhong@campus.lmu.de" },
+  { name = "Ziyu", email = "Mu.Ziyu@campus.lmu.de" },
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools]
@@ -21,7 +24,7 @@ packages = ["mushroom_classification"]
 dependencies = {file = ["requirements.txt"]}
 
 [tool.setuptools.dynamic.optional-dependencies]
-dev = {file = ['requirements_dev.txt']}
+dev = {file = ['requirements_test.txt']}
 
 [tool.ruff]
 line-length = 120
