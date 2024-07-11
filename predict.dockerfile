@@ -6,19 +6,17 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
-COPY requirements_test.txt requirements_test.txt
 COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
 
-COPY tests/ tests/
-COPY data/ data/
+COPY data/processed/test data/processed/test
+COPYT models/ models/
 
 COPY mushroom_classification/ mushroom_classification/
 
 WORKDIR /
 
 RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install -r requirements_test.txt --no-cache-dir
 RUN pip install -e . --no-deps --no-cache-dir
 
 # Install make
@@ -34,4 +32,4 @@ RUN apt-get update && apt-get install -y make
 ENTRYPOINT ["make"]
 
 # Default target to run
-CMD ["train_model"]
+CMD ["predict_model"]
