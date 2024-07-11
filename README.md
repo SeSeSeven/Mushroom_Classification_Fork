@@ -46,6 +46,15 @@ Also, future iterations, and the eventually deployed model, are likely to be fin
 
 We will evaluate our models using classification accuracy, as it will feel more natural for potential users of our application who are not familiar with machine learning.
 
+| Class      | True Positives | False Positives | True Negatives | False Negatives | Accuracy | Precision | Recall  | F1 Score |
+|------------|----------------|-----------------|----------------|-----------------|----------|-----------|---------|----------|
+| Boletus    | 52.0           | 14.0            | 836.0          | 109.0           | 0.878338 | 0.787879  | 0.322981| 0.458150 |
+| Russula    | 92.0           | 133.0           | 705.0          | 81.0            | 0.788328 | 0.408889  | 0.531792| 0.462312 |
+| Entoloma   | 29.0           | 170.0           | 786.0          | 26.0            | 0.806133 | 0.145729  | 0.527273| 0.228346 |
+| Hygrocybe  | 23.0           | 7.0             | 956.0          | 25.0            | 0.968348 | 0.766667  | 0.479167| 0.589744 |
+| Agaricus   | 6.0            | 16.0            | 942.0          | 47.0            | 0.937685 | 0.272727  | 0.113208| 0.160000 |
+
+
 ## :star: Rebuild
 
 ### Reproduce using the newest build (Docker image):
