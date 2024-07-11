@@ -10,14 +10,16 @@ COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
 
 COPY data/processed/test data/processed/test
-COPYT models/ models/
+COPY models/resnet50.ckpt models/resnet50.ckpt
 
 COPY mushroom_classification/ mushroom_classification/
 
+COPY outputs/ outputs/
+
 WORKDIR /
 
-RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install -e . --no-deps --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -e . --no-deps --no-cache-dir
 
 # Install make
 RUN apt-get update && apt-get install -y make

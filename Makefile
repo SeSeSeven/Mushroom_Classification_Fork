@@ -79,6 +79,9 @@ build_docker_predict:
 run_docker:
 	docker run --name mc1 mushroom:latest
 
+run_docker_local:
+	docker run --name mc1 -v $(pwd)/models:/models/ mushroom:latest
+
 run_docker_predict:
 	docker run --name predict1 predict:latest
 

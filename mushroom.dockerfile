@@ -17,9 +17,9 @@ COPY mushroom_classification/ mushroom_classification/
 
 WORKDIR /
 
-RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install -r requirements_test.txt --no-cache-dir
-RUN pip install -e . --no-deps --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements_test.txt --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -e . --no-deps --no-cache-dir
 
 # Install make
 RUN apt-get update && apt-get install -y make
