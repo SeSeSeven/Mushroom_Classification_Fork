@@ -11,3 +11,6 @@ steps:
 images:
 - 'gcr.io/mushroom-classification-427315/train-model'
 - 'gcr.io/mushroom-classification-427315/predict-model'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
