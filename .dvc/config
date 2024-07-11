@@ -1,4 +1,4 @@
 [core]
-    remote = gstorage
-['remote "gstorage"']
-    url = gs://mushroom_genus
+    remote = myremote
+['remote "myremote"']
+    url = gs://mushrooms_for_mount/data
