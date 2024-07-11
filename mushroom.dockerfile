@@ -10,7 +10,7 @@ COPY requirements_test.txt requirements_test.txt
 COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
 COPY data.dvc data.dvc
-COPY src/ src/
+COPY mushroom_classification/ mushroom_classification/
 
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
