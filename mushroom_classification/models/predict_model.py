@@ -7,7 +7,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from PIL import UnidentifiedImageError
 from mushroom_classification import _PROJECT_ROOT
-from mushroom_classification.models.model import MushroomClassifier
+from model import MushroomClassifier
 import pytorch_lightning as pl
 import typer
 from typing_extensions import Annotated

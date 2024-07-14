@@ -10,7 +10,7 @@ from pytorch_lightning.loggers import WandbLogger
 from torch.profiler import profile, ProfilerActivity
 from pathlib import Path
 from mushroom_classification import _PATH_CONF
-from mushroom_classification.models.model import get_model
+from model import get_model
 import wandb
 import hydra
 from hydra.utils import instantiate
