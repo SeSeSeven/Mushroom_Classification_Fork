@@ -1,4 +1,4 @@
-# :mushroom: Mushroom Genus Classification
+# :mushroom: Mushroom Genus Classification Fork
 
 ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
