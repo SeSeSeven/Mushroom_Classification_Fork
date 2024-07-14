@@ -4,9 +4,9 @@ FROM python:3.12-slim
 # Environment variable to control training environment
 ENV VERTEX_AI="true"
 
-RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc wget python3.12 && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y build-essential gcc wget python3.12 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
@@ -18,7 +18,6 @@ COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
 COPY mushroom_classification/ mushroom_classification/
 COPY tests/ tests/
-#COPY data.dvc data.dvc 
 
 # Install Python dependencies
 RUN pip install -r requirements.txt --no-cache-dir
