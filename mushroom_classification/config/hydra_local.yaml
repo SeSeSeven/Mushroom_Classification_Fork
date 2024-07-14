@@ -1,16 +1,22 @@
+# hydra_local.yaml
 hydra:
   run:
     dir: .
 
-data_dir: ${hydra:runtime.cwd}/data/processed
-
 sweep: false
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  model_save_path: "models/resnet50.pt"
+  output_dir: "outputs"
+  model_dir: "models"
+  metrics_path: "outputs/metrics.csv"
+  prediction_path: "outputs/predictions.npy"
 
 model:
   num_classes: 9
   model_name: 'resnet50.a1_in1k'
-  save_path: ${hydra:runtime.cwd}/models
-  save_name: 'resnet50'
   data_transforms:
     train:
       - _target_: torchvision.transforms.Resize

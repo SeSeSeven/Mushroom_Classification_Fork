@@ -1,57 +1,69 @@
 # Makefile
 
-.PHONY: all make_dataset train_model predict_model visualize test pull_data lint coverage build_docker run_docker run_pipeline
+.PHONY: all make_dataset train_model predict_model visualize test lint coverage build_docker run_docker run_pipeline pull_data
 
 # Define your Python executable and script names
 PYTHON := python
 SCRIPTS_DIR := mushroom_classification
 TEST_DIR := tests
-COV_REPORT_DIR := reports/coverage
 
-RAW_DIR := data/raw
-PROCESSED_DIR := data/processed
-RANDOM_STATE := 42
-SAVE_MODEL := models/resnet50.ckpt
-MODEL_NAME := resnet50.a1_in1k
-NUM_CLASSES := 9
-BATCH_SIZE := 32
-OUTPUT_DIR := outputs
+# Define paths based on the environment
+ifeq ($(VERTEX_AI), true)
+    RAW_DIR := /gcs/mushroom_test_bucket/data/raw
+    PROCESSED_DIR := /gcs/mushroom_test_bucket/data/processed
+    MODEL_DIR := /gcs/mushroom_test_bucket/models
+    SAVE_MODEL := $(MODEL_DIR)/resnet50.pt
+    OUTPUT_DIR := /gcs/mushroom_test_bucket/outputs
+    REPORT_DIR := /gcs/mushroom_test_bucket/reports/figures
+    COV_REPORT_DIR := /gcs/mushroom_test_bucket/reports/coverage
+    METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
+    PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
+else
+    RAW_DIR := data/raw
+    PROCESSED_DIR := data/processed
+    MODEL_DIR := models
+    SAVE_MODEL := $(MODEL_DIR)/resnet50.pt
+    OUTPUT_DIR := outputs
+    REPORT_DIR := reports/figures
+    COV_REPORT_DIR := reports/coverage
+    METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
+    PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
+endif
+
+# Training related variables
 VAL_SIZE := 0.15
 TEST_SIZE := 0.15
 RANDOM_STATE := 42
-PREDICTION_PATH := outputs/predictions.npy
-REPORT_DIR := reports/figures
 NUM_IMAGES := 16
 FIGURE_ARRANGE := "(4,4)"
-METRICS_PATH := outputs/metrics.csv
 
 MAKE_DATASET_SCRIPT := $(SCRIPTS_DIR)/data/make_dataset.py
 TRAIN_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/train_model.py
 PREDICT_MODEL_SCRIPT := $(SCRIPTS_DIR)/models/predict_model.py
-VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visulaization/visualize.py
+VISUALIZE_SCRIPT := $(SCRIPTS_DIR)/visualization/visualize.py
 
 # Default target
 all: make_dataset train_model predict_model visualize
 
+# Target to pull data with DVC
+# pull_data:
+#	dvc pull
+
 # Target to create the dataset
-make_dataset: pull_data
+make_dataset: # pull_data
 	$(PYTHON) $(MAKE_DATASET_SCRIPT) -d $(RAW_DIR) -p $(PROCESSED_DIR) -v $(VAL_SIZE) -t $(TEST_SIZE) -r $(RANDOM_STATE)
 
 # Target to train the model
 train_model:
-	$(PYTHON) $(TRAIN_MODEL_SCRIPT)
+	$(PYTHON) $(TRAIN_MODEL_SCRIPT) --vertex-ai=$(VERTEX_AI) -p $(PROCESSED_DIR) -s $(SAVE_MODEL)
 
 # Target to predict using the model
 predict_model:
-	$(PYTHON) $(PREDICT_MODEL_SCRIPT) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -n $(MODEL_NAME) -c $(NUM_CLASSES) -b $(BATCH_SIZE) -o $(OUTPUT_DIR)
+	$(PYTHON) $(PREDICT_MODEL_SCRIPT) --vertex-ai=$(VERTEX_AI) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -o $(OUTPUT_DIR)
 
 # Target to visualize the results
 visualize:
 	$(PYTHON) $(VISUALIZE_SCRIPT) -p $(PROCESSED_DIR) -e $(PREDICTION_PATH) -o $(REPORT_DIR) -i $(NUM_IMAGES) -f $(FIGURE_ARRANGE) -r $(RANDOM_STATE) -m $(METRICS_PATH)
-
-# Target to pull data with DVC
-pull_data:
-	dvc pull
 
 # Target to run linter
 lint:
@@ -74,10 +86,10 @@ build_docker:
 
 # Target to run the Docker container
 run_docker:
-	docker run --name mc1 mushroom:latest
+	docker run --name mc1 -e VERTEX_AI=$(VERTEX_AI) mushroom:latest
 
 # Target to run the entire pipeline
-run_pipeline: pull_data lint test coverage make_dataset train_model predict_model visualize
+run_pipeline: lint test coverage make_dataset train_model predict_model visualize
 
 .PHONY: help
 help:

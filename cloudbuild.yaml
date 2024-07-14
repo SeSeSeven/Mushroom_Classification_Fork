@@ -1,0 +1,9 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'mushroom.dockerfile', '-t', 'gcr.io/dtumlops-425312/mushroom-classification-test-image', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/dtumlops-425312/mushroom-classification-test-image']

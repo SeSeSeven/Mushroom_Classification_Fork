@@ -1,24 +1,29 @@
 # Base image
 FROM python:3.12-slim
 
+# Environment variable to control training environment
+ENV VERTEX_AI="true"
+
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc wget python3.12 && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
+# Set the working directory
+WORKDIR /app
+
+# Copy project files
 COPY requirements.txt requirements.txt
 COPY requirements_test.txt requirements_test.txt
 COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
-COPY data.dvc data.dvc
 COPY mushroom_classification/ mushroom_classification/
+COPY tests/ tests/
+#COPY data.dvc data.dvc 
 
-WORKDIR /
+# Install Python dependencies
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install -r requirements_test.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
-
-# Install make
-RUN apt-get update && apt-get install -y make
 
 # Always run make
 ENTRYPOINT ["make"]

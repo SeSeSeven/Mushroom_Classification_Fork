@@ -1,0 +1,56 @@
+# hydra_vertex.yaml
+hydra:
+  run:
+    dir: .
+
+sweep: false
+
+data:
+  raw_dir: "/gcs/mushroom_test_bucket/data/raw"
+  processed_dir: "/gcs/mushroom_test_bucket/data/processed"
+  model_save_path: "/gcs/mushroom_test_bucket/models/resnet50.pt"
+  output_dir: "/gcs/mushroom_test_bucket/outputs"
+  model_dir: "/gcs/mushroom_test_bucket/models"
+  metrics_path: "/gcs/mushroom_test_bucket/outputs/metrics.csv"
+  prediction_path: "/gcs/mushroom_test_bucket/outputs/predictions.npy"
+
+model:
+  num_classes: 9
+  model_name: 'resnet50.a1_in1k'
+  data_transforms:
+    train:
+      - _target_: torchvision.transforms.Resize
+        size: 235
+        interpolation: 3
+        max_size: null
+        antialias: true
+      - _target_: torchvision.transforms.RandomRotation
+        degrees: 45
+      - _target_: torchvision.transforms.CenterCrop
+        size: 224
+      - _target_: torchvision.transforms.RandomHorizontalFlip
+        p: 0.3
+      - _target_: torchvision.transforms.RandomVerticalFlip
+        p: 0.5
+      - _target_: torchvision.transforms.ToTensor
+      - _target_: torchvision.transforms.Normalize
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+    valid:
+      - _target_: torchvision.transforms.Resize
+        size: 235
+        interpolation: 3
+        max_size: null
+        antialias: true
+      - _target_: torchvision.transforms.CenterCrop
+        size: 224
+      - _target_: torchvision.transforms.ToTensor
+      - _target_: torchvision.transforms.Normalize
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+hyperparameters:
+  batch_size: 32
+  learning_rate: 1e-3
+  epochs: 5
