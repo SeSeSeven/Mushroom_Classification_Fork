@@ -28,7 +28,7 @@ class SafeImageFolder(datasets.ImageFolder):
 app = typer.Typer()
 
 @app.command()
-def predict(vertex_ai: Annotated[bool, typer.Option("--vertex-ai", "-v")] = False,
+def predict(vertex_ai: Annotated[bool, typer.Option("--vertex-ai", "-v", is_flag=True)] = False,
             processed_dir: Annotated[str,typer.Option("--processed_dir",'-p')]=None, 
             save_model: Annotated[str,typer.Option("--save_model",'-s')]=None, 
             output_dir: Annotated[str,typer.Option("--output_dir",'-o')]=None) -> None:
