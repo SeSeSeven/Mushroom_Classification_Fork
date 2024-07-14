@@ -89,7 +89,7 @@ run_docker:
 	docker run --name mc1 -e VERTEX_AI=$(VERTEX_AI) mushroom:latest
 
 # Target to run the entire pipeline
-run_pipeline: lint test coverage make_dataset train_model predict_model visualize
+run_pipeline: make_dataset train_model predict_model visualize
 
 .PHONY: help
 help:
