@@ -1,17 +1,18 @@
 # Base image
-FROM python:3.12-slim
+FROM python:3.10-slim
 
 # Environment variable to control training environment
 ENV VERTEX_AI="true"
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y build-essential gcc wget python3.12 && \
+    apt-get install --no-install-recommends -y build-essential gcc wget python3.10 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
 
 # Copy project files
+# COPY data.dvc data.dvc
 COPY requirements.txt requirements.txt
 COPY requirements_test.txt requirements_test.txt
 COPY pyproject.toml pyproject.toml
