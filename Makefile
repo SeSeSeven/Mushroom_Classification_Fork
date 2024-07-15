@@ -16,7 +16,7 @@ ifeq ($(VERTEX_AI), "true")
     COV_REPORT_DIR := /gcs/mushroom_test_bucket/reports/coverage
     METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
     PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
-    VERTEX_FLAG := -v
+    VERTEX_FLAG := true
 else
     RAW_DIR := data/raw
     PROCESSED_DIR := data/processed
@@ -27,7 +27,7 @@ else
     COV_REPORT_DIR := reports/coverage
     METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
     PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
-    VERTEX_FLAG :=
+    VERTEX_FLAG := false
 endif
 
 # Training related variables
@@ -55,11 +55,11 @@ make_dataset: # pull_data
 
 # Target to train the model
 train_model:
-	$(PYTHON) $(TRAIN_MODEL_SCRIPT) $(VERTEX_FLAG) -p $(PROCESSED_DIR) -s $(SAVE_MODEL)
+	$(PYTHON) $(TRAIN_MODEL_SCRIPT) -v $(VERTEX_FLAG) -p $(PROCESSED_DIR) -s $(SAVE_MODEL)
 
 # Target to predict using the model
 predict_model:
-	$(PYTHON) $(PREDICT_MODEL_SCRIPT) $(VERTEX_FLAG) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -o $(OUTPUT_DIR)
+	$(PYTHON) $(PREDICT_MODEL_SCRIPT) -v $(VERTEX_FLAG) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -o $(OUTPUT_DIR)
 
 # Target to visualize the results
 visualize:

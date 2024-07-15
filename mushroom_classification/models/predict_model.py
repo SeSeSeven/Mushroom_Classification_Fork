@@ -28,12 +28,18 @@ class SafeImageFolder(datasets.ImageFolder):
 app = typer.Typer()
 
 @app.command()
-def predict(vertex_ai: Annotated[bool, typer.Option("--vertex-ai", "-v", is_flag=True)] = False,
-            processed_dir: Annotated[str,typer.Option("--processed_dir",'-p')]=None, 
-            save_model: Annotated[str,typer.Option("--save_model",'-s')]=None, 
-            output_dir: Annotated[str,typer.Option("--output_dir",'-o')]=None) -> None:
+def predict_model(vertex_ai: Annotated[str, typer.Option("--vertex-ai", "-v")] = None,
+                  processed_dir: Annotated[str, typer.Option("--processed_dir", '-p')] = None, 
+                  save_model: Annotated[str, typer.Option("--save_model", '-s')] = None, 
+                  output_dir: Annotated[str, typer.Option("--output_dir", '-o')] = None) -> None:
     """Predict the class of mushrooms using a trained model, and calculate metrics from the prediction results."""
-    config_name = "hydra_vertex" if vertex_ai else "hydra_local"
+    
+    if vertex_ai == "true":
+        config_name = "hydra_vertex"
+    elif vertex_ai == "false":
+        config_name = "hydra_local"
+    else:
+        raise ValueError("Invalid value for --vertex-ai. Use 'true' or 'false'.")
     
     @hydra.main(version_base=None, config_path=_PROJECT_ROOT/'mushroom_classification/config', config_name=config_name)
     def inner_predict(cfg: DictConfig) -> None:

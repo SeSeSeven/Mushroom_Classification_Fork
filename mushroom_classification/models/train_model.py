@@ -40,11 +40,17 @@ class SaveModelPTCallback(Callback):
 app = typer.Typer()
 
 @app.command()
-def train_model(vertex_ai: Annotated[bool, typer.Option("--vertex-ai", "-v", is_flag=True)] = False,
+def train_model(vertex_ai: Annotated[str, typer.Option("--vertex-ai", "-v")] = None,
                 processed_dir: Annotated[str,typer.Option("--processed_dir",'-p')]=None,
                 save_model: Annotated[str,typer.Option("--save_model",'-s')]=None) -> None:
     """Train a model using the provided hyperparameters."""
-    config_name = "hydra_vertex" if vertex_ai else "hydra_local"
+    
+    if vertex_ai == "true":
+        config_name = "hydra_vertex"
+    elif vertex_ai == "false":
+        config_name = "hydra_local"
+    else:
+        raise ValueError("Invalid value for --vertex-ai. Use 'true' or 'false'.")
     
     @hydra.main(version_base=None, config_path=_PATH_CONF, config_name=config_name)
     def inner_train_model(cfg: DictConfig) -> None:
