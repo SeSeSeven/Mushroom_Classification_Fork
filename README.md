@@ -107,6 +107,11 @@ export WANDB_ENTITY=***********
     │   ├── config                <- Config files.
     │   │   ├── hydra.yaml
     │   │   └── sweep.yaml
+    │   │
+    │   ├── fastapi_app           <- Fastapi files.
+    │   │   ├── main.py
+    │   │   ├── Dockerfile
+    │   │   └── requirements.txt
     │   │
     │   ├── data                  <- Scripts to process data.
     │   │   ├── __init__.py
