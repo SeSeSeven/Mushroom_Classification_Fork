@@ -105,7 +105,8 @@ export WANDB_ENTITY=***********
     │   ├── __init__.py           <- Makes mushroom_classification a Python module.
     │   │
     │   ├── config                <- Config files.
-    │   │   ├── hydra.yaml
+    │   │   ├── hydra_local.yaml
+    │   │   ├── hydra_vertex.yaml
     │   │   └── sweep.yaml
     │   │
     │   ├── fastapi_app           <- Fastapi files.
@@ -156,6 +157,8 @@ export WANDB_ENTITY=***********
     ├── requirements_test.txt      <- The requirements file for reproducing the analysis environment.
     |
     ├── mushroom.dockerfile 
+    |
+    ├── cloudbuild.yaml 
     │
     └── setup.py                   <- makes project pip installable (pip install -e .) so src can be imported
 
