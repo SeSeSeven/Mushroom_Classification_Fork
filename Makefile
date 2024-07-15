@@ -1,5 +1,3 @@
-# Makefile
-
 .PHONY: all make_dataset train_model predict_model visualize test lint coverage build_docker run_docker run_pipeline pull_data
 
 # Define your Python executable and script names
@@ -8,7 +6,7 @@ SCRIPTS_DIR := mushroom_classification
 TEST_DIR := tests
 
 # Define paths based on the environment
-ifeq ($(VERTEX_AI), true)
+ifeq ($(VERTEX_AI), "true")
     RAW_DIR := /gcs/mushroom_test_bucket/data/raw
     PROCESSED_DIR := /gcs/mushroom_test_bucket/data/processed
     MODEL_DIR := /gcs/mushroom_test_bucket/models
@@ -18,6 +16,7 @@ ifeq ($(VERTEX_AI), true)
     COV_REPORT_DIR := /gcs/mushroom_test_bucket/reports/coverage
     METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
     PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
+    VERTEX_FLAG := -v
 else
     RAW_DIR := data/raw
     PROCESSED_DIR := data/processed
@@ -28,6 +27,7 @@ else
     COV_REPORT_DIR := reports/coverage
     METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
     PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
+    VERTEX_FLAG :=
 endif
 
 # Training related variables
@@ -55,11 +55,11 @@ make_dataset: # pull_data
 
 # Target to train the model
 train_model:
-	$(PYTHON) $(TRAIN_MODEL_SCRIPT) --vertex-ai=$(VERTEX_AI) -p $(PROCESSED_DIR) -s $(SAVE_MODEL)
+	$(PYTHON) $(TRAIN_MODEL_SCRIPT) $(VERTEX_FLAG) -p $(PROCESSED_DIR) -s $(SAVE_MODEL)
 
 # Target to predict using the model
 predict_model:
-	$(PYTHON) $(PREDICT_MODEL_SCRIPT) --vertex-ai=$(VERTEX_AI) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -o $(OUTPUT_DIR)
+	$(PYTHON) $(PREDICT_MODEL_SCRIPT) $(VERTEX_FLAG) -p $(PROCESSED_DIR) -s $(SAVE_MODEL) -o $(OUTPUT_DIR)
 
 # Target to visualize the results
 visualize:
