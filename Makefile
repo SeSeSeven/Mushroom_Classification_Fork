@@ -6,7 +6,7 @@ SCRIPTS_DIR := mushroom_classification
 TEST_DIR := tests
 
 # Define paths based on the environment
-ifeq ($(VERTEX_AI), "true")
+ifeq ($(VERTEX_AI), true)
     RAW_DIR := /gcs/mushroom_test_bucket/data/raw
     PROCESSED_DIR := /gcs/mushroom_test_bucket/data/processed
     MODEL_DIR := /gcs/mushroom_test_bucket/models
@@ -17,7 +17,7 @@ ifeq ($(VERTEX_AI), "true")
     METRICS_PATH := $(OUTPUT_DIR)/metrics.csv
     PREDICTION_PATH := $(OUTPUT_DIR)/predictions.npy
     VERTEX_FLAG := true
-else
+else ifeq ($(VERTEX_AI), false)
     RAW_DIR := data/raw
     PROCESSED_DIR := data/processed
     MODEL_DIR := models

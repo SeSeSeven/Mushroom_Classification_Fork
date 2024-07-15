@@ -2,7 +2,7 @@
 FROM python:3.10-slim
 
 # Environment variable to control training environment
-ENV VERTEX_AI="true"
+ENV VERTEX_AI=true
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y build-essential gcc wget python3.10 && \
